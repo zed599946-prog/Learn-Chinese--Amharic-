@@ -1,0 +1,574 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><title>Learn Chinese Amharic — ቻይንኛን በአማርኛ</title>
+<meta name="description" content="ቻይንኛን በአማርኛ ይማሩ፤ HSK1 ቃላት፣ የመማሪያ ካርዶች፣ ፈተና እና ውይይት።">
+<meta name="theme-color" content="#000000">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Noto+Sans:wght@400;600;700&family=Noto+Sans+Ethiopic:wght@400;600;700;800&display=swap">
+</head><body>
+<style>
+/* Layout: one phone-first column with a bottom tab bar; wider screens get a centred column. */
+:root{
+  --bg:#000000;        /* black ground */
+  --surface:#111111;   /* cards */
+  --ink:#F5F5F5;       /* text */
+  --muted:#9E9E9E;     /* secondary text */
+  --line:#2A2A2A;      /* hairlines */
+  --jade:#3DDC97;      /* primary action */
+  --jade-soft:#0F2A20;
+  --vermilion:#FF8A70; /* wrong answers */
+  --pinyin:#8DB8FF;    /* pinyin reads blue so it stands apart from Amharic */
+  --ok:#4ADE80; --bad:#FF8A80;
+  --display:"Bricolage Grotesque","Noto Sans Ethiopic",system-ui,sans-serif;
+  --body:"Noto Sans Ethiopic","Noto Sans",system-ui,sans-serif;
+  --latin:"Noto Sans",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --surface:#111111; --ink:#F5F5F5; --muted:#9E9E9E; --line:#2A2A2A;
+    --jade:#3DDC97; --jade-soft:#0F2A20; --vermilion:#F08A74; --pinyin:#8DB8FF;
+    --ok:#4ADE80; --bad:#FF8A80; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#111111; --ink:#F5F5F5; --muted:#9E9E9E; --line:#2A2A2A;
+  --jade:#3DDC97; --jade-soft:#0F2A20; --vermilion:#F08A74; --pinyin:#8DB8FF;
+  --ok:#4ADE80; --bad:#FF8A80; color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#EDF3EF; --surface:#FFFFFF; --ink:#12231D; --muted:#5C6F66; --line:#D5E1DA;
+  --jade:#0E7356; --jade-soft:#D7EEE4; --vermilion:#C2412D; --pinyin:#1B4D8A;
+  --ok:#17794A; --bad:#B42C1B; color-scheme:light;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:0 96px;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--jade);outline-offset:2px;border-radius:8px}
+[hidden]{display:none!important}
+/* File picker must stay in the page (not display:none) so phones open it on tap. */
+.file-btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;cursor:pointer}
+.file-in{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:100px}
+.py{font-family:var(--latin);color:var(--pinyin);font-weight:700}
+.muted{color:var(--muted)}
+.tnum{font-variant-numeric:tabular-nums}
+
+.app{max-width:720px;margin:0 auto;display:grid;gap:14px}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);
+  padding:16px 0 12px;display:grid;gap:12px}
+.top-row{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:var(--display);font-weight:800;font-size:1.5rem;letter-spacing:-.01em;line-height:1.1}
+.brand small{display:block;font-family:var(--body);font-size:.78rem;font-weight:600;color:var(--muted);letter-spacing:.02em}
+.progress{display:grid;gap:6px;justify-items:end;min-width:120px}
+.progress span{font-size:.82rem;color:var(--muted)}
+.bar{width:120px;height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--jade);width:0;border-radius:99px;transition:width .35s}
+
+.search{width:100%;padding:13px 16px;border-radius:14px;border:1px solid var(--line);background:var(--surface);font-size:1rem}
+.search:focus{outline:2px solid var(--jade);outline-offset:0;border-color:transparent}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 0 4px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:7px 14px;font-size:.88rem;font-weight:600;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+
+.list{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.item{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px}
+.emo{width:52px;height:52px;border-radius:16px;background:var(--jade-soft);display:grid;place-items:center;font-size:1.6rem}
+.item .head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.item .py{font-size:1.15rem;overflow-wrap:anywhere}
+.item .am{font-weight:700;font-size:1.02rem}
+.item .en{color:var(--muted);font-size:.9rem}
+.rd{display:inline-block;font-size:.84rem;background:var(--bg);border-radius:8px;padding:1px 8px;margin-top:4px}
+.note{font-size:.88rem;color:var(--muted);margin-top:6px;overflow-wrap:anywhere}
+.row-actions{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;min-height:40px;font-size:.88rem;font-weight:700;white-space:nowrap}
+.btn.primary{background:var(--jade);border-color:var(--jade);color:#000}
+.hint-line{font-size:.85rem;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:10px 12px}
+.btn.ghost{background:transparent}
+.btn.on{color:var(--ok);border-color:var(--ok)}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.45}
+.empty{color:var(--muted);text-align:center;padding:28px 8px}
+
+.stage{display:grid;gap:16px;justify-items:center}
+.flash{width:100%;perspective:1000px;background:none;border:0;padding:0;text-align:center}
+.flash-inner{display:grid;width:100%;min-height:360px;transition:transform .5s;transform-style:preserve-3d}
+.flash.flipped .flash-inner{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);
+  border:1px solid var(--line);border-radius:24px;padding:26px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-width:0}
+.face.back{transform:rotateY(180deg)}
+.face .big{font-size:clamp(2.1rem,10vw,3rem);font-family:var(--latin);color:var(--pinyin);font-weight:700;overflow-wrap:anywhere}
+.face .am-big{font-size:1.45rem;font-weight:700}
+.face .en-big{color:var(--muted)}
+.face .rd-big{background:var(--jade-soft);border-radius:10px;padding:4px 14px;font-size:.98rem}
+.face .note-small{font-size:.9rem;color:var(--muted);max-width:46ch}
+.ex-small{font-size:.92rem;text-align:left;width:100%;background:var(--bg);border-radius:14px;padding:12px 14px}
+.controls{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;width:100%}
+.counter{font-size:.9rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:14px;min-width:0}
+.qcard .prompt{font-size:1.3rem;font-weight:800}
+.opts{display:grid;gap:10px}
+@media (min-width:560px){.opts{grid-template-columns:1fr 1fr}}
+.opt{border:1px solid var(--line);background:var(--bg);border-radius:14px;padding:13px 14px;text-align:left;font-family:var(--latin);font-size:1.05rem;font-weight:700;color:var(--pinyin);min-height:50px}
+.opt.right{border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg));color:var(--ink)}
+.opt.wrong{border-color:var(--bad);background:color-mix(in srgb,var(--bad) 14%,var(--bg));color:var(--ink)}
+.feedback{min-height:1.6em;font-weight:700}
+.feedback.ok{color:var(--ok)} .feedback.no{color:var(--bad)}
+.score{text-align:center;display:grid;gap:8px;justify-items:center}
+
+.dlg{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:16px;display:grid;gap:12px;min-width:0}
+.dlg h3{margin:0;font-family:var(--display);font-size:1.12rem}
+.line{display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:start}
+.who{width:36px;height:36px;border-radius:50%;background:var(--jade);color:#000;display:grid;place-items:center;font-weight:800}
+.line .py{overflow-wrap:anywhere;display:block}
+.line .am{display:block;font-weight:600}
+.line .en{display:block;color:var(--muted);font-style:italic;font-size:.9rem}
+
+/* edit dialog */
+dialog{border:1px solid var(--line);border-radius:22px;background:var(--surface);color:var(--ink);padding:0;width:min(460px,calc(100vw - 32px));max-height:88vh}
+dialog::backdrop{background:rgba(5,15,11,.55)}
+dialog form{display:grid;gap:12px;padding:20px}
+dialog h2{margin:0;font-family:var(--display);font-size:1.3rem}
+dialog label{display:grid;gap:5px;font-size:.85rem;font-weight:700;color:var(--muted)}
+dialog input,dialog textarea{width:100%;padding:11px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font-size:1rem}
+dialog textarea{min-height:80px;resize:vertical}
+dialog input:focus,dialog textarea:focus{outline:2px solid var(--jade);outline-offset:0;border-color:transparent}
+.form-actions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.hint{font-size:.82rem;color:var(--muted)}
+
+.tabs{position:fixed;left:0;right:0;bottom:0;z-index:6;background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-left:max(0px,env(safe-area-inset-left,0px));padding-right:max(0px,env(safe-area-inset-right,0px))}
+.tab{background:none;border:0;padding:9px 2px 10px;font-size:.78rem;font-weight:600;color:var(--muted);display:grid;gap:3px;justify-items:center;min-height:60px}
+.tab .ic{font-size:1.25rem;line-height:1}
+.tab[aria-selected="true"]{color:var(--jade)}
+.tab[aria-selected="true"] .ic{transform:translateY(-1px)}
+
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(88px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);
+  padding:10px 16px;border-radius:999px;font-size:.9rem;font-weight:600;z-index:9;max-width:calc(100vw - 32px);text-align:center}
+@media (prefers-reduced-motion: reduce){.flash-inner,.bar>i{transition:none}}
+</style>
+
+<div class="app">
+  <header class="top">
+    <div class="top-row">
+      <div class="brand">🇨🇳 Learn Chinese<small>Amharic · ቻይንኛን በአማርኛ</small></div>
+      <div class="progress" aria-live="polite">
+        <span id="learned-text" class="tnum">0 / 150</span>
+        <div class="bar" aria-hidden="true"><i id="learned-bar"></i></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="view-words" aria-label="ቃላት" style="display:grid;gap:12px">
+      <input class="search" id="search" type="search" placeholder="ቃል ፈልግ (Pinyin ወይም አማርኛ)" aria-label="ቃል ፈልግ">
+      <div class="chips" id="chips-words" role="group" aria-label="ምዕራፍ ምረጥ"></div>
+      <div class="hint-line">🎙 የራስህን ድምጽ ለመጨመር «የኔ ድምጽ» ን ተጫን እና የተቀዳ ፋይል ምረጥ። ድምጽ ካልጨመርክ የመሣሪያው ድምጽ ይነበባል።</div>
+      <ul class="list" id="list"></ul>
+    </section>
+
+    <section id="view-cards" aria-label="ካርድ" hidden style="display:grid;gap:12px">
+      <div class="chips" id="chips-cards" role="group" aria-label="ምዕራፍ ምረጥ"></div>
+      <div class="stage">
+        <button class="flash" id="flash" type="button" aria-label="ካርዱን ገልብጥ"><div class="flash-inner" id="flash-inner"></div></button>
+        <div class="controls">
+          <button class="btn" id="btn-no" type="button">አላውቅም</button>
+          <button class="btn ghost" id="btn-listen" type="button">▶ ስማ</button>
+          <button class="btn primary" id="btn-yes" type="button">አውቃለሁ</button>
+        </div>
+        <div class="counter" id="card-count"></div>
+      </div>
+    </section>
+
+    <section id="view-quiz" aria-label="ጥያቄ" hidden style="display:grid;gap:12px">
+      <div class="chips" id="chips-quiz" role="group" aria-label="ምዕራፍ ምረጥ"></div>
+      <div id="quiz-body"></div>
+    </section>
+
+    <section id="view-dialogue" aria-label="ውይይት" hidden style="display:grid;gap:12px">
+      <div class="chips" id="chips-dlg" role="group" aria-label="ምዕራፍ ምረጥ"></div>
+      <div id="dlg-body" style="display:grid;gap:14px"></div>
+    </section>
+  </main>
+  <footer style="text-align:center;color:var(--muted);font-size:.78rem;padding:8px 0 4px">Learn Chinese Amharic · HSK1 Practice</footer>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="ዋና ምናሌ">
+  <button class="tab" role="tab" data-tab="words" aria-selected="true"><span class="ic">📚</span>ቃላት</button>
+  <button class="tab" role="tab" data-tab="cards" aria-selected="false"><span class="ic">🃏</span>ካርድ</button>
+  <button class="tab" role="tab" data-tab="quiz" aria-selected="false"><span class="ic">✅</span>ጥያቄ</button>
+  <button class="tab" role="tab" data-tab="dialogue" aria-selected="false"><span class="ic">💬</span>ውይይት</button>
+</nav>
+
+<dialog id="edit-dialog" aria-labelledby="edit-title">
+  <form id="edit-form" method="dialog">
+    <h2 id="edit-title">ቃሉን አርም</h2>
+    <input type="hidden" id="f-no">
+    <label>Pinyin<input id="f-py" required autocomplete="off"></label>
+    <label>አማርኛ ትርጉም<input id="f-am" required></label>
+    <label>English meaning<input id="f-en" required></label>
+    <label>አማርኛ አነባበብ<input id="f-rd" required></label>
+    <label>ምልክት (emoji)<input id="f-emo" maxlength="8"></label>
+    <label>ማስታወሻ<textarea id="f-note"></textarea></label>
+    <p class="hint">ለውጦቹ በዚህ መሣሪያ ላይ ይቀመጣሉ።</p>
+    <div class="form-actions">
+      <button class="btn danger" type="button" id="f-reset">ወደ መጀመሪያው መልስ</button>
+      <button class="btn" type="button" id="f-cancel">ሰርዝ</button>
+      <button class="btn primary" type="submit" id="f-save">አስቀምጥ</button>
+    </div>
+  </form>
+</dialog>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+  var DATA = [{"n": 1, "title": "ምዕራፍ 1", "range": "ቃላት 1 - 15", "intro": "ይህ ምዕራፍ መሰረታዊ ሰላምታ፣ ምግብ፣ ቁጥሮችና የባለቤትነት ቃላትን ይዟል።", "words": [{"no": 1, "py": "ài", "am": "መውደድ", "en": "to love", "rd": "ኣይ", "emo": "❤️", "note": "ài ለሰው ወይም ለነገር ጠንካራ ፍቅር ነው። ለመውደድ ቀለል ያለ ቃል xǐhuan (እወዳለሁ) ነው።", "ex": [{"py": "Wǒ ài nǐ.", "am": "እወድሃለሁ።", "en": "I love you."}, {"py": "Wǒ ài chī cài.", "am": "ወጥ መብላት እወዳለሁ።", "en": "I love to eat vegetables."}]}, {"no": 2, "py": "bā", "am": "ስምንት", "en": "eight", "rd": "ባ", "emo": "8️⃣", "note": "ቻይናውያን 8 ዕድለኛ ቁጥር ይሉታል። በቁጥር ሲቆጠር 'ባ' በሚለው ድምፅ ይነገራል።", "ex": [{"py": "Bā gè rén.", "am": "ስምንት ሰዎች።", "en": "Eight people."}, {"py": "Wǒ yǒu bā běn shū.", "am": "ስምንት መጽሐፎች አሉኝ።", "en": "I have eight books."}]}, {"no": 3, "py": "bàba", "am": "አባት/አባባ", "en": "dad", "rd": "ባባ", "emo": "👨", "note": "bàba ለአባት የሚጠቀሙበት ወዳጃዊ ቃል ነው። ለአባትህ 'nǐ bàba' ትላለህ።", "ex": [{"py": "Wǒ bàba hěn gāoxìng.", "am": "አባቴ በጣም ደስተኛ ነው።", "en": "My dad is very happy."}, {"py": "Bàba zài jiā.", "am": "አባዬ ቤት ነው።", "en": "Dad is at home."}]}, {"no": 4, "py": "bēizi", "am": "ብርጭቆ/ጽዋ", "en": "cup", "rd": "ቤይዚ", "emo": "🥛", "note": "ብርጭቆ ሲቆጠር (gè) ወይም (zhī) ይጠቀማሉ።", "ex": [{"py": "Zhè shì wǒ de bēizi.", "am": "ይህ የኔ ብርጭቆ ነው።", "en": "This is my cup."}, {"py": "Qǐng gěi wǒ yì ge bēizi.", "am": "እባክህ አንድ ብርጭቆ ስጠኝ።", "en": "Please give me a cup."}]}, {"no": 5, "py": "Běijīng", "am": "ቤጂንግ", "en": "Beijing", "rd": "ቤይጂንግ", "emo": "🏯", "note": "የቻይና ዋና ከተማ ናት። የቦታ ስሞች በፒንዪን በትልቅ ፊደል ይጀምራሉ።", "ex": [{"py": "Wǒ qù Běijīng.", "am": "ቤጂንግ እሄዳለሁ።", "en": "I'm going to Beijing."}, {"py": "Běijīng hěn dà.", "am": "ቤጂንግ በጣም ትልቅ ናት።", "en": "Beijing is very big."}]}, {"no": 6, "py": "běn", "am": "(የመጽሐፍ መቁጠሪያ)", "en": "(measure word for books)", "rd": "ቤን", "emo": "📘", "note": "(běn) ለመጽሐፍና ለደብተር ብቻ የሚያገለግል መቁጠሪያ ነው።", "ex": [{"py": "Yì běn shū.", "am": "አንድ መጽሐፍ።", "en": "A book."}, {"py": "Zhè běn shū shì wǒ de.", "am": "ይህ መጽሐፍ የኔ ነው።", "en": "This book is mine."}]}, {"no": 7, "py": "bú kèqi", "am": "ምንም አይደለም", "en": "you're welcome", "rd": "ቡ ክኧቺ", "emo": "🙏", "note": "bù ከ4ኛ ቃና በፊት ሲመጣ ወደ bú ይቀየራል።", "ex": [{"py": "Xièxie! Bú kèqi.", "am": "አመሰግናለሁ! ምንም አይደለም።", "en": "Thanks! You're welcome."}, {"py": "Bú shì wǒ de.", "am": "የኔ አይደለም።", "en": "It's not mine."}]}, {"no": 8, "py": "bù", "am": "አይ/አይደለም", "en": "not", "rd": "ቡ", "emo": "🚫", "note": "bù ግስና ቅፅል ለመካድ ይጠቅማል። ከ4ኛ ቃና በፊት ሲመጣ bú ይሆናል (ለምሳሌ bú shì)።", "ex": [{"py": "Wǒ bù hē chá.", "am": "ሻይ አልጠጣም።", "en": "I don't drink tea."}, {"py": "Tā bù lái.", "am": "እሱ አይመጣም።", "en": "He isn't coming."}]}, {"no": 9, "py": "cài", "am": "ወጥ/አትክልት", "en": "dish / vegetable", "rd": "ጻይ", "emo": "🥬", "note": "c የሚነገረው 'ts' ነው። ለምግብ ወይም ለአትክልት ያገለግላል።", "ex": [{"py": "Zhè ge cài hěn hǎo chī.", "am": "ይህ ወጥ በጣም ጣፋጭ ነው።", "en": "This dish is very tasty."}, {"py": "Wǒ chī cài.", "am": "አትክልት እበላለሁ።", "en": "I eat vegetables."}]}, {"no": 10, "py": "chá", "am": "ሻይ", "en": "tea", "rd": "ቻ", "emo": "🍵", "note": "ቻይናውያን ሻይን በብዛት ይጠጣሉ። ch የሚነገረው ጠንካራ 'ቸ' ነው።", "ex": [{"py": "Wǒ hē chá.", "am": "ሻይ እጠጣለሁ።", "en": "I drink tea."}, {"py": "Nǐ hē chá ma?", "am": "ሻይ ትጠጣለህ?", "en": "Do you drink tea?"}]}, {"no": 11, "py": "chī", "am": "መብላት", "en": "to eat", "rd": "ቺ", "emo": "🍽️", "note": "chī fàn ማለት ምግብ መብላት ማለት ነው።", "ex": [{"py": "Wǒ chī fàn.", "am": "ምግብ እበላለሁ።", "en": "I eat a meal."}, {"py": "Wǒmen yìqǐ chī ba!", "am": "አብረን እንብላ!", "en": "Let's eat together!"}]}, {"no": 12, "py": "chūzūchē", "am": "ታክሲ", "en": "taxi", "rd": "ቹዙቼ", "emo": "🚕", "note": "ከእንግሊዝኛ የተወሰደ ቃል ነው። 'ታክሲ ጥራ' ለማለት dǎ chūzūchē ይላሉ።", "ex": [{"py": "Wǒ zuò chūzūchē qù xuéxiào.", "am": "ወደ ትምህርት ቤት በታክሲ እሄዳለሁ።", "en": "I go to school by taxi."}, {"py": "Qǐng dǎ chūzūchē.", "am": "እባክህ ታክሲ ጥራ።", "en": "Please call a taxi."}]}, {"no": 13, "py": "dǎ diànhuà", "am": "ስልክ መደወል", "en": "to make a phone call", "rd": "ዳ ዲየንሁዋ", "emo": "📞", "note": "(dǎ) 'መምታት' ቢሆንም እዚህ 'መደወል' ማለት ነው።", "ex": [{"py": "Wǒ měi tiān dǎ diànhuà gěi māma.", "am": "በየቀኑ ለእናቴ እደውላለሁ።", "en": "I call mom every day."}, {"py": "Nǐ dǎ diànhuà gěi wǒ.", "am": "ለኔ ስልክ ደውልልኝ።", "en": "Call me."}]}, {"no": 14, "py": "dà", "am": "ትልቅ", "en": "big", "rd": "ዳ", "emo": "🐘", "note": "ተቃራኒው xiǎo (ትንሽ) ነው።", "ex": [{"py": "Zhè ge fángzi hěn dà.", "am": "ይህ ቤት በጣም ትልቅ ነው።", "en": "This house is very big."}, {"py": "Dà gǒu.", "am": "ትልቅ ውሻ።", "en": "A big dog."}]}, {"no": 15, "py": "de", "am": "(የ... ባለቤትነት)", "en": "(possessive particle)", "rd": "ደ", "emo": "🔑", "note": "ከሰው ስም ወይም ከተውላጠ ስም በኋላ 'የ' ማለት ነው። ለቤተሰብ ቃላት de ብዙ ጊዜ ይቀራል (wǒ bàba = አባቴ)።", "ex": [{"py": "Zhè shì tā de shū.", "am": "ይህ የእሱ መጽሐፍ ነው።", "en": "This is his book."}, {"py": "Wǒ bàba.", "am": "አባቴ።", "en": "My dad."}]}], "dialogues": [{"title": "ይቅርታና ምስጋና", "lines": [{"who": "A", "py": "Duìbuqǐ!", "am": "ይቅርታ!", "en": "Sorry!"}, {"who": "B", "py": "Méi guānxi.", "am": "ችግር የለም።", "en": "No problem."}, {"who": "A", "py": "Xièxie!", "am": "አመሰግናለሁ!", "en": "Thank you!"}, {"who": "B", "py": "Bú kèqi.", "am": "ምንም አይደለም።", "en": "You're welcome."}]}, {"title": "ሻይ ትጠጣለህ?", "lines": [{"who": "A", "py": "Nǐ hē chá ma?", "am": "ሻይ ትጠጣለህ?", "en": "Do you drink tea?"}, {"who": "B", "py": "Hē, xièxie.", "am": "እጠጣለሁ፣ አመሰግናለሁ።", "en": "Yes, thank you."}]}]}, {"n": 2, "title": "ምዕራፍ 2", "range": "ቃላት 16 - 30", "intro": "ሰዓት፣ መሳሪያዎች፣ መዝናኛ እና ቦታዎች ቃላት።", "words": [{"no": 16, "py": "diǎn", "am": "ሰዓት", "en": "o'clock; a bit", "rd": "ዲየን", "emo": "🕐", "note": "ሰዓት ለማለት diǎn ይጠቅማል። ደቂቃ ለማለት fēnzhōng ይጠቀሙ።", "ex": [{"py": "Xiànzài sān diǎn.", "am": "አሁን ሶስት ሰዓት ነው።", "en": "It's three o'clock now."}, {"py": "Wǒ yǒu yì diǎnr shíjiān.", "am": "ትንሽ ጊዜ አለኝ።", "en": "I have a little time."}]}, {"no": 17, "py": "diànnǎo", "am": "ኮምፒዩተር", "en": "computer", "rd": "ዲየንናኦ", "emo": "💻", "note": "diàn (ኤሌክትሪክ) + nǎo (አእምሮ) = ኮምፒዩተር።", "ex": [{"py": "Zhè shì wǒ de diànnǎo.", "am": "ይህ የኔ ኮምፒዩተር ነው።", "en": "This is my computer."}, {"py": "Wǒ yòng diànnǎo xuéxí.", "am": "በኮምፒዩተር እማራለሁ።", "en": "I study with a computer."}]}, {"no": 18, "py": "diànshì", "am": "ቴሌቪዥን", "en": "television", "rd": "ዲየንሽ", "emo": "📺", "note": "ቴሌቪዥን ለማየት kàn diànshì ይላሉ።", "ex": [{"py": "Wǒ kàn diànshì.", "am": "ቴሌቪዥን አያለሁ።", "en": "I watch TV."}, {"py": "Diànshì hěn hǎokàn.", "am": "ቴሌቪዥኑ ቆንጆ ነው።", "en": "The TV is nice to watch."}]}, {"no": 19, "py": "diànyǐng", "am": "ፊልም", "en": "movie", "rd": "ዲየንዪንግ", "emo": "🎬", "note": "ፊልም ለማየት kàn diànyǐng ይላሉ።", "ex": [{"py": "Wǒ xǐhuan kàn diànyǐng.", "am": "ፊልም ማየት እወዳለሁ።", "en": "I like watching movies."}, {"py": "Jīntiān kàn diànyǐng ba!", "am": "ዛሬ ፊልም እንይ!", "en": "Let's watch a movie today!"}]}, {"no": 20, "py": "dōngxi", "am": "ነገር/ዕቃ", "en": "thing", "rd": "ዶንግሺ", "emo": "📦", "note": "dōngxi አጠቃላይ ቃል ነው። ቀለል ያለ ድምፅ (neutral tone) ሊኖረው ይችላል።", "ex": [{"py": "Zhè shì shénme dōngxi?", "am": "ይህ ምንድን ነገር ነው?", "en": "What thing is this?"}, {"py": "Wǒ yǒu hěn duō dōngxi.", "am": "ብዙ ነገሮች አሉኝ።", "en": "I have many things."}]}, {"no": 21, "py": "dōu", "am": "ሁሉም", "en": "all", "rd": "ዶው", "emo": "🌐", "note": "dōu 'ሁሉም' ማለት ነው፤ ከግሱ በፊት ይመጣል።", "ex": [{"py": "Wǒmen dōu hěn hǎo.", "am": "ሁላችንም ደህና ነን።", "en": "We are all well."}, {"py": "Tāmen dōu lái le.", "am": "ሁሉም መጡ።", "en": "They have all come."}]}, {"no": 22, "py": "dú", "am": "ማንበብ", "en": "to read", "rd": "ዱ", "emo": "📖", "note": "dú ማንበብ ነው። xiě ደግሞ መጻፍ ነው።", "ex": [{"py": "Wǒ měi tiān dú shū.", "am": "በየቀኑ መጽሐፍ አነባለሁ።", "en": "I read books every day."}, {"py": "Nǐ dú shénme?", "am": "ምን ታነባለህ?", "en": "What are you reading?"}]}, {"no": 23, "py": "duìbuqǐ", "am": "ይቅርታ", "en": "sorry", "rd": "ዱዌይ ቡቺ", "emo": "🙇", "note": "duìbuqǐ ይቅርታ ለመጠየቅ ይጠቅማል። ይቅርታውን ለመመለስ méi guānxi ይላሉ።", "ex": [{"py": "Duìbuqǐ, wǒ chídào le.", "am": "ይቅርታ፣ ዘግይቼ ነበር።", "en": "Sorry, I was late."}, {"py": "Duìbuqǐ, wǒ bù zhīdào.", "am": "ይቅርታ፣ አላውቅም።", "en": "Sorry, I don't know."}]}, {"no": 24, "py": "duō", "am": "ብዙ", "en": "many", "rd": "ዱዎ", "emo": "🔢", "note": "duō ብዙ ለማለት ቅፅል ነው። ከ hěn ጋር ሲሆን 'በጣም ብዙ' ማለት ነው።", "ex": [{"py": "Tā yǒu hěn duō péngyou.", "am": "እሱ ብዙ ጓደኞች አሉት።", "en": "He has many friends."}, {"py": "Duō chī diǎnr!", "am": "ትንሽ ተጨማሪ ብላ!", "en": "Eat a little more!"}]}, {"no": 25, "py": "duōshao", "am": "ስንት", "en": "how many / how much", "rd": "ዱዎሻኦ", "emo": "❓", "note": "ለትልቅ ቁጥር duōshao፤ ከ10 በታች ለሆነ ቁጥር jǐ ይጠቀማሉ።", "ex": [{"py": "Yí ge duōshao qián?", "am": "አንዱ ስንት ብር ነው?", "en": "How much is one?"}, {"py": "Nǐ yǒu duōshao ge péngyou?", "am": "ስንት ጓደኞች አሉህ?", "en": "How many friends do you have?"}]}, {"no": 26, "py": "érzi", "am": "ወንድ ልጅ", "en": "son", "rd": "ኧርዚ", "emo": "👦", "note": "ér (ልጅ) + zi = ወንድ ልጅ። ሴት ልጅ nǚ'ér ነው።", "ex": [{"py": "Wǒ yǒu yí ge érzi.", "am": "አንድ ወንድ ልጅ አለኝ።", "en": "I have a son."}, {"py": "Tā de érzi hěn cōngming.", "am": "የእሱ ልጅ ብልህ ነው።", "en": "His son is smart."}]}, {"no": 27, "py": "èr", "am": "ሁለት", "en": "two", "rd": "ኧር", "emo": "2️⃣", "note": "2 በቁጥር ሲቆጠር èr ነው። በ'ሁለት ሰዎች' ሲባል liǎng ይላሉ።", "ex": [{"py": "Èr jiā fàndiàn.", "am": "ሁለት ምግብ ቤቶች።", "en": "Two restaurants."}, {"py": "Wǒ yǒu liǎng ge bēizi.", "am": "ሁለት ብርጭቆዎች አሉኝ።", "en": "I have two cups."}]}, {"no": 28, "py": "fàndiàn", "am": "ምግብ ቤት/ሆቴል", "en": "restaurant / hotel", "rd": "ፋንዲየን", "emo": "🍽️", "note": "ሁለቱንም ማለት ይችላል፤ ቦታው ከሁኔታው ይታወቃል።", "ex": [{"py": "Zhè ge fàndiàn hěn hǎo.", "am": "ይህ ምግብ ቤት ጥሩ ነው።", "en": "This restaurant is good."}, {"py": "Wǒ zhù zài fàndiàn.", "am": "ሆቴል ውስጥ እኖራለሁ።", "en": "I'm staying at a hotel."}]}, {"no": 29, "py": "fēijī", "am": "አውሮፕላን", "en": "airplane", "rd": "ፌይጂ", "emo": "✈️", "note": "ፌይ (ይበርራል) + jī (ማሽን) = አውሮፕላን።", "ex": [{"py": "Fēijī hěn kuài.", "am": "አውሮፕላን በጣም ፈጣን ነው።", "en": "Airplanes are very fast."}, {"py": "Wǒ zuò fēijī qù Běijīng.", "am": "ቤጂንግ በአውሮፕላን እሄዳለሁ።", "en": "I'm flying to Beijing."}]}, {"no": 30, "py": "fēnzhōng", "am": "ደቂቃ", "en": "minute", "rd": "ፈንዡንግ", "emo": "⏱️", "note": "ደቂቃ ለማለት fēnzhōng፤ ሰዓት ለማለት diǎn ይጠቀሙ።", "ex": [{"py": "Shí fēnzhōng.", "am": "አስር ደቂቃ።", "en": "Ten minutes."}, {"py": "Děng yí fēnzhōng.", "am": "አንድ ደቂቃ ጠብቅ።", "en": "Wait a minute."}]}], "dialogues": [{"title": "ሰዓት ስንት ነው?", "lines": [{"who": "A", "py": "Xiànzài jǐ diǎn?", "am": "አሁን ስንት ሰዓት ነው?", "en": "What time is it now?"}, {"who": "B", "py": "Xiànzài sān diǎn shí fēnzhōng.", "am": "አሁን ሶስት ሰዓት ከ10 ደቂቃ ነው።", "en": "It's 3:10 now."}]}, {"title": "ቴሌቪዥን ታያለህ?", "lines": [{"who": "A", "py": "Nǐ kàn diànshì ma?", "am": "ቴሌቪዥን ታያለህ?", "en": "Do you watch TV?"}, {"who": "B", "py": "Wǒ kàn, dànshì wǒ yě xǐhuan dú shū.", "am": "አያለሁ፣ ግን መጽሐፍ ማንበብም እወዳለሁ።", "en": "I do, but I also like reading books."}]}]}, {"n": 3, "title": "ምዕራፍ 3", "range": "ቃላት 31 - 45", "intro": "ስሜት፣ ሥራ፣ እንስሳት፣ ቋንቋና ቤተሰብ።", "words": [{"no": 31, "py": "gāoxìng", "am": "ደስተኛ", "en": "happy", "rd": "ጋኦሺንግ", "emo": "😃", "note": "gāoxìng ደስተኛ ማለት ሲሆን 'ስላወቅሁህ ደስ ብሎኛል' ለማለትም ይነገራል።", "ex": [{"py": "Wǒ hěn gāoxìng rènshi nǐ.", "am": "ስላወቅሁህ በጣም ደስ ብሎኛል።", "en": "I'm very happy to meet you."}, {"py": "Tā hěn gāoxìng.", "am": "እሱ በጣም ደስተኛ ነው።", "en": "He is very happy."}]}, {"no": 32, "py": "gè", "am": "(አጠቃላይ መቁጠሪያ)", "en": "(general measure word)", "rd": "ጌ", "emo": "🔢", "note": "(gè) ለብዙ ነገሮችና ሰዎች የሚያገለግል መቁጠሪያ ነው።", "ex": [{"py": "Yí ge rén.", "am": "አንድ ሰው።", "en": "One person."}, {"py": "Sān ge péngyou.", "am": "ሶስት ጓደኞች።", "en": "Three friends."}]}, {"no": 33, "py": "gōngzuò", "am": "ሥራ", "en": "work / job", "rd": "ጎንግዙኦ", "emo": "💼", "note": "gōngzuò ሥራ ወይም ሥራ መስራትን ያመለክታል።", "ex": [{"py": "Wǒ de gōngzuò hěn hǎo.", "am": "ስራዬ ጥሩ ነው።", "en": "My work is good."}, {"py": "Wǒ zài gōngsī gōngzuò.", "am": "በኩባንያ ውስጥ እሰራለሁ።", "en": "I work in a company."}]}, {"no": 34, "py": "gǒu", "am": "ውሻ", "en": "dog", "rd": "ጎው", "emo": "🐶", "note": "gǒu ውሻ ነው። ድመት māo ነው።", "ex": [{"py": "Gǒu hěn dà.", "am": "ውሻው ትልቅ ነው።", "en": "The dog is big."}, {"py": "Wǒ xǐhuan gǒu.", "am": "ውሻ እወዳለሁ።", "en": "I like dogs."}]}, {"no": 35, "py": "Hànyǔ", "am": "ቻይንኛ ቋንቋ", "en": "Chinese (language)", "rd": "ሃንዩ", "emo": "🇨🇳", "note": "Hàn (ሃን ህዝብ) + yǔ (ቋንቋ)። ቋንቋ ማለት yǔ ነው።", "ex": [{"py": "Wǒ xuéxí Hànyǔ.", "am": "ቻይንኛ ቋንቋ እማራለሁ።", "en": "I study Chinese."}, {"py": "Nǐ shuō Hànyǔ ma?", "am": "ቻይንኛ ትናገራለህ?", "en": "Do you speak Chinese?"}]}, {"no": 36, "py": "hǎo", "am": "ጥሩ", "en": "good", "rd": "ሃኦ", "emo": "👍", "note": "hǎo ጥሩ ማለት ነው። hǎo ብሎ ሰላምታ ሲሰጥ ደህና ማለት ነው።", "ex": [{"py": "Nǐ hǎo!", "am": "ሰላም!", "en": "Hello!"}, {"py": "Hěn hǎo.", "am": "በጣም ጥሩ።", "en": "Very good."}]}, {"no": 37, "py": "hào", "am": "ቀን/ቁጥር", "en": "date / number", "rd": "ሃኦ", "emo": "📅", "note": "ቀንን ለመናገር hào ይጠቅማል (ለምሳሌ ሶስተኛ ቀን)።", "ex": [{"py": "Jīntiān shí hào.", "am": "ዛሬ 10ኛ ቀን ነው።", "en": "Today is the 10th."}, {"py": "Wǒ de hàomǎ shì sān.", "am": "የኔ ቁጥር ሶስት ነው።", "en": "My number is three."}]}, {"no": 38, "py": "hē", "am": "መጠጣት", "en": "to drink", "rd": "ሄ", "emo": "🥤", "note": "hē መጠጣት ነው፤ ለምግብ ግን chī ነው።", "ex": [{"py": "Wǒ hē shuǐ.", "am": "ውሃ እጠጣለሁ።", "en": "I drink water."}, {"py": "Nǐ hē shénme?", "am": "ምን ትጠጣለህ?", "en": "What do you drink?"}]}, {"no": 39, "py": "hé", "am": "እና", "en": "and", "rd": "ሄ", "emo": "➕", "note": "hé ሁለት ስሞችን ያገናኛል። ለቃላት ብቻ ይጠቀማል።", "ex": [{"py": "Wǒ hé nǐ.", "am": "እኔና አንተ።", "en": "You and I."}, {"py": "Chá hé shuǐ.", "am": "ሻይና ውሃ።", "en": "Tea and water."}]}, {"no": 40, "py": "hěn", "am": "በጣም", "en": "very", "rd": "ሄን", "emo": "🔥", "note": "hěn 'በጣም' ማለት ነው፤ ብዙ ጊዜ ከቅፅል ፊት ይመጣል። ቅፅል ብቻውን ብዙ ጊዜ አይቆምም።", "ex": [{"py": "Tā hěn gāo.", "am": "እሱ ረጅም ነው።", "en": "He is tall."}, {"py": "Wǒ hěn lèi.", "am": "እኔ በጣም ደክሞኛል።", "en": "I'm very tired."}]}, {"no": 41, "py": "hòumiàn", "am": "ከኋላ", "en": "behind", "rd": "ሆውሚየን", "emo": "🚪", "note": "hòu (ኋላ) + miàn (ፊት) = ከኋላ። ከፊት qiánmiàn ነው።", "ex": [{"py": "Shāngdiàn hòumiàn.", "am": "ከሱቁ ጀርባ።", "en": "Behind the shop."}, {"py": "Wǒ zài tā hòumiàn.", "am": "ከእሱ ኋላ ነኝ።", "en": "I'm behind him."}]}, {"no": 42, "py": "huí", "am": "መመለስ", "en": "to return", "rd": "ሁይ", "emo": "↩️", "note": "huí ወደ ቦታ መመለስን ያመለክታል። huí jiā ወደ ቤት መመለስ ነው።", "ex": [{"py": "Wǒ huí jiā.", "am": "ወደ ቤት እመለሳለሁ።", "en": "I'm going home."}, {"py": "Tā měi tiān huí jiā.", "am": "እሱ በየቀኑ ወደ ቤት ይመለሳል።", "en": "He returns home every day."}]}, {"no": 43, "py": "huì", "am": "መቻል/ማወቅ", "en": "can / to know how to", "rd": "ሁይ", "emo": "🧠", "note": "huì ተምሮ የተገኘ ችሎታ ነው፤ néng ደግሞ አቅም ወይም ፈቃድ ነው።", "ex": [{"py": "Wǒ huì shuō Hànyǔ.", "am": "ቻይንኛ መናገር እችላለሁ።", "en": "I can speak Chinese."}, {"py": "Tā huì zuò fàn.", "am": "እሱ ምግብ ማብሰል ይችላል።", "en": "He can cook."}]}, {"no": 44, "py": "jǐ", "am": "ስንት/ጥቂት", "en": "how many / a few", "rd": "ጂ", "emo": "🔟", "note": "jǐ ብዙ ጊዜ ከ10 በታች ለሆነ ቁጥር ይጠቅማል።", "ex": [{"py": "Nǐ jiā yǒu jǐ ge rén?", "am": "ቤተሰብህ ስንት ሰው አለው?", "en": "How many people are in your family?"}, {"py": "Wǒ yǒu jǐ ge péngyou.", "am": "ጥቂት ጓደኞች አሉኝ።", "en": "I have a few friends."}]}, {"no": 45, "py": "jiā", "am": "ቤት/ቤተሰብ", "en": "home / family", "rd": "ጂያ", "emo": "🏠", "note": "jiā ቤትም ቤተሰብም ማለት ነው።", "ex": [{"py": "Wǒ zài jiā lǐ chī fàn.", "am": "በቤት ውስጥ እበላለሁ።", "en": "I eat at home."}, {"py": "Wǒ de jiā hěn dà.", "am": "ቤተሰቤ ትልቅ ነው።", "en": "My family is big."}]}], "dialogues": [{"title": "ቤተሰብህ ስንት ነው?", "lines": [{"who": "A", "py": "Nǐ jiā yǒu jǐ ge rén?", "am": "ቤተሰብህ ስንት ሰው አለው?", "en": "How many people are in your family?"}, {"who": "B", "py": "Wǒ jiā yǒu sān ge rén: bàba, māma hé wǒ.", "am": "ሶስት ሰው አለን፦ አባቴ፣ እናቴና እኔ።", "en": "Three: my dad, my mom and me."}]}, {"title": "ስምህ ማን ነው?", "lines": [{"who": "A", "py": "Nǐ jiào shénme míngzi?", "am": "ስምህ ማን ነው?", "en": "What is your name?"}, {"who": "B", "py": "Wǒ jiào Abebe.", "am": "እኔ አበበ እባላለሁ።", "en": "My name is Abebe."}]}]}, {"n": 4, "title": "ምዕራፍ 4", "range": "ቃላት 46 - 60", "intro": "ስም መጥራት፣ ጊዜ፣ መክፈት፣ ማየት፣ ቀዝቃዛ እና የጥያቄ ቃላት።", "words": [{"no": 46, "py": "jiào", "am": "ተብሎ መጠራት", "en": "to be called", "rd": "ጂያኦ", "emo": "🏷️", "note": "ስምህን ለመጠየቅ Nǐ jiào shénme míngzi? ይላሉ። ስምህን ለመናገር Wǒ jiào... ትላለህ።", "ex": [{"py": "Wǒ jiào Abebe.", "am": "እኔ አበበ እባላለሁ።", "en": "My name is Abebe."}, {"py": "Tā jiào Lì Lì.", "am": "እሷ ሊ ሊ ትባላለች።", "en": "She is called Li Li."}]}, {"no": 47, "py": "jīntiān", "am": "ዛሬ", "en": "today", "rd": "ጂንቲየን", "emo": "📅", "note": "jīntiān ዛሬ ነው። ትናንት zuótiān፣ ነገ míngtiān ነው።", "ex": [{"py": "Jīntiān hěn lěng.", "am": "ዛሬ በጣም ቀዝቃዛ ነው።", "en": "Today is very cold."}, {"py": "Jīntiān wǒ hěn máng.", "am": "ዛሬ በጣም ስራ በዝቶብኛል።", "en": "I'm very busy today."}]}, {"no": 48, "py": "jiǔ", "am": "ዘጠኝ", "en": "nine", "rd": "ጂዮው", "emo": "9️⃣", "note": "jiǔ 9 ነው። ቁጥር 'ዘጠኝ' ሲሆን ድምፁ 'ጂዮው' ነው።", "ex": [{"py": "Wǒ yǒu jiǔ běn shū.", "am": "ዘጠኝ መጽሐፎች አሉኝ።", "en": "I have nine books."}, {"py": "Xiànzài jiǔ diǎn.", "am": "አሁን ዘጠኝ ሰዓት ነው።", "en": "It's nine o'clock now."}]}, {"no": 49, "py": "kāi", "am": "መክፈት/መንዳት", "en": "to open / to drive", "rd": "ካይ", "emo": "🚗", "note": "kāi በር መክፈት ወይም መኪና መንዳት ማለት ነው።", "ex": [{"py": "Qǐng kāi mén.", "am": "እባክህ በሩን ክፈት።", "en": "Please open the door."}, {"py": "Wǒ huì kāi chē.", "am": "መኪና መንዳት እችላለሁ።", "en": "I can drive a car."}]}, {"no": 50, "py": "kàn", "am": "ማየት/መመልከት", "en": "to look / to watch", "rd": "ካን", "emo": "👀", "note": "kàn ማየት፣ መመልከት ነው። kànjiàn ደግሞ 'ዓይን ማየት/ማስተዋል' ነው።", "ex": [{"py": "Wǒ kàn shū.", "am": "መጽሐፍ አያለሁ።", "en": "I look at a book."}, {"py": "Nǐ kàn shénme?", "am": "ምን ትመለከታለህ?", "en": "What are you looking at?"}]}, {"no": 51, "py": "kànjiàn", "am": "ማየት (ማስተዋል)", "en": "to see", "rd": "ካንጂየን", "emo": "👁️", "note": "kànjiàn የሆነ ነገር በዓይን ማየትን ያመለክታል።", "ex": [{"py": "Wǒ kànjiàn tā le.", "am": "እሱን አየሁት።", "en": "I saw him."}, {"py": "Nǐ kànjiàn wǒ le ma?", "am": "እኔን አየኸኝ?", "en": "Did you see me?"}]}, {"no": 52, "py": "kuài", "am": "ብር", "en": "unit of currency", "rd": "ኩዋይ", "emo": "💴", "note": "kuài የገንዘብ መለኪያ ነው (ዩዋን)። ለ'ብር' ያገለግላል።", "ex": [{"py": "Yí kuài qián.", "am": "አንድ ብር።", "en": "One kuai."}, {"py": "Bā kuài qián.", "am": "ስምንት ብር።", "en": "Eight kuai."}]}, {"no": 53, "py": "lái", "am": "መምጣት", "en": "to come", "rd": "ላይ", "emo": "🚶", "note": "lái ወደዚህ መምጣት ነው። qù ደግሞ መሄድ ነው።", "ex": [{"py": "Nǐ lái ba!", "am": "ና!", "en": "Come on!"}, {"py": "Tā míngtiān lái.", "am": "እሱ ነገ ይመጣል።", "en": "He's coming tomorrow."}]}, {"no": 54, "py": "lǎoshī", "am": "መምህር", "en": "teacher", "rd": "ላኦሽ", "emo": "🧑‍🏫", "note": "lǎoshī መምህር ነው፤ ለሴትም ለወንድም ይጠቅማል።", "ex": [{"py": "Tā shì wǒ de lǎoshī.", "am": "እሱ/እሷ መምህሬ ነው/ናት።", "en": "He/She is my teacher."}, {"py": "Lǎoshī hǎo!", "am": "መምህር ሰላም!", "en": "Hello, teacher!"}]}, {"no": 55, "py": "le", "am": "(የተፈጸመ ድርጊት ምልክት)", "en": "(completed-action particle)", "rd": "ለ", "emo": "✔️", "note": "(le) ድርጊቱ መፈጸሙን ያሳያል። wǒ lái le = መጣሁ።", "ex": [{"py": "Wǒ chī le.", "am": "በልቻለሁ።", "en": "I have eaten."}, {"py": "Tā qù le.", "am": "እሱ ሄዷል።", "en": "He has gone."}]}, {"no": 56, "py": "lěng", "am": "ቀዝቃዛ", "en": "cold", "rd": "ለንግ", "emo": "🥶", "note": "lěng ቀዝቃዛ ነው። 'ሞቃት' rè ነው።", "ex": [{"py": "Tiānqì hěn lěng.", "am": "የአየር ሁኔታው በጣም ቀዝቃዛ ነው።", "en": "The weather is very cold."}, {"py": "Shuǐ hěn lěng.", "am": "ውሃው ቀዝቃዛ ነው።", "en": "The water is cold."}]}, {"no": 57, "py": "lǐ", "am": "ውስጥ", "en": "inside", "rd": "ሊ", "emo": "📥", "note": "lǐ 'ውስጥ' ማለት ነው። በቦታ ቃሎች ከ zài ጋር ይመጣል።", "ex": [{"py": "Wǒ zài jiā lǐ.", "am": "ቤት ውስጥ ነኝ።", "en": "I'm inside the house."}, {"py": "Shū zài bāo lǐ.", "am": "መጽሐፉ ቦርሳ ውስጥ ነው።", "en": "The book is inside the bag."}]}, {"no": 58, "py": "liù", "am": "ስድስት", "en": "six", "rd": "ሊዩ", "emo": "6️⃣", "note": "liù 6 ነው። ድምፁ 'ሊዩ' ነው።", "ex": [{"py": "Liù gè rén.", "am": "ስድስት ሰዎች።", "en": "Six people."}, {"py": "Wǒ yǒu liù ge bēizi.", "am": "ስድስት ብርጭቆዎች አሉኝ።", "en": "I have six cups."}]}, {"no": 59, "py": "ma", "am": "(የጥያቄ ምልክት)", "en": "(question particle)", "rd": "ማ", "emo": "❓", "note": "(ma) ዓረፍተ ነገሩ ጥያቄ መሆኑን ያሳያል። ዓረፍተ ነገሩ መጨረሻ ይመጣል።", "ex": [{"py": "Nǐ hǎo ma?", "am": "ደህና ነህ?", "en": "Are you well?"}, {"py": "Nǐ lái ma?", "am": "ትመጣለህ?", "en": "Are you coming?"}]}, {"no": 60, "py": "māma", "am": "እናት/እማማ", "en": "mom", "rd": "ማማ", "emo": "👩", "note": "māma እናቴ ነው። ለወዳጅነት እማማ ትላለህ።", "ex": [{"py": "Wǒ māma hěn piàoliang.", "am": "እናቴ በጣም ቆንጆ ናት።", "en": "My mom is very pretty."}, {"py": "Zhè shì māma de shū.", "am": "ይህ የእናቴ መጽሐፍ ነው።", "en": "This is my mom's book."}]}], "dialogues": [{"title": "ሰላምታ", "lines": [{"who": "A", "py": "Nǐ hǎo! Nǐ lái le?", "am": "ሰላም! መጣህ?", "en": "Hello! Have you come?"}, {"who": "B", "py": "Wǒ lái le, xièxie!", "am": "መጣሁ፣ አመሰግናለሁ!", "en": "I've come, thank you!"}]}, {"title": "ቀዝቃዛ ነው አይደል?", "lines": [{"who": "A", "py": "Jīntiān hěn lěng ma?", "am": "ዛሬ ቀዝቃዛ ነው አይደል?", "en": "Today is cold, isn't it?"}, {"who": "B", "py": "Shì, hěn lěng! Wǒ xiǎng hē rè chá.", "am": "አዎ፣ በጣም ቀዝቃዛ ነው! ሞቃት ሻይ መጠጣት እፈልጋለሁ።", "en": "Yes, very cold! I want to drink hot tea."}]}]}, {"n": 5, "title": "ምዕራፍ 5", "range": "ቃላት 61 - 75", "intro": "መግዛት፣ እንስሳ፣ ምግብ፣ ስም፣ ቦታ የሚጠይቁ ቃላት እና የጥያቄ ቃላት።", "words": [{"no": 61, "py": "mǎi", "am": "መግዛት", "en": "to buy", "rd": "ማይ", "emo": "🛒", "note": "mǎi መግዛት ነው። 'ሽጥ' ማለት mài ነው።", "ex": [{"py": "Wǒ xiǎng mǎi yì běn shū.", "am": "አንድ መጽሐፍ መግዛት እፈልጋለሁ።", "en": "I want to buy a book."}, {"py": "Tā mǎi le píngguǒ.", "am": "እሱ ፖም ገዛ።", "en": "He bought apples."}]}, {"no": 62, "py": "māo", "am": "ድመት", "en": "cat", "rd": "ማኦ", "emo": "🐱", "note": "māo ድመት ነው። ውሻ gǒu ነው።", "ex": [{"py": "Zhè māo hěn piàoliang.", "am": "ይህ ድመት በጣም ቆንጆ ነው።", "en": "This cat is very pretty."}, {"py": "Wǒ yǒu yì zhī māo.", "am": "አንድ ድመት አለኝ።", "en": "I have a cat."}]}, {"no": 63, "py": "méi guānxi", "am": "ችግር የለም", "en": "it's OK / no worries", "rd": "ሜይ ጓንሺ", "emo": "👌", "note": "ይቅርታ ለተባለ ሰው መልስ ነው። 'ምንም አይደለም' ማለትም ይቻላል።", "ex": [{"py": "Duìbuqǐ! — Méi guānxi.", "am": "ይቅርታ! — ችግር የለም።", "en": "Sorry! — No problem."}, {"py": "Méi guānxi, wǒ děng nǐ.", "am": "ችግር የለም፣ እጠብቅሃለሁ።", "en": "No worries, I'll wait for you."}]}, {"no": 64, "py": "méiyǒu", "am": "የለውም/የላትም", "en": "to not have", "rd": "ሜይዮው", "emo": "🙅", "note": "méiyǒu 'የለውም' ማለት ነው። ለማሳሰብ bù አይደለም ብለው ይጠቀማሉ።", "ex": [{"py": "Wǒ méiyǒu qián.", "am": "ገንዘብ የለኝም።", "en": "I don't have money."}, {"py": "Tā méiyǒu gǒu.", "am": "እሱ ውሻ የለውም።", "en": "He doesn't have a dog."}]}, {"no": 65, "py": "mǐfàn", "am": "ሩዝ", "en": "cooked rice", "rd": "ሚፋን", "emo": "🍚", "note": "mǐfàn የተቀቀለ ሩዝ ነው። fàn ማለት በአጠቃላይ ምግብ ነው።", "ex": [{"py": "Wǒ chī mǐfàn.", "am": "ሩዝ እበላለሁ።", "en": "I eat rice."}, {"py": "Mǐfàn hěn hǎo chī.", "am": "ሩዝ በጣም ጣፋጭ ነው።", "en": "Rice is very tasty."}]}, {"no": 66, "py": "míngzi", "am": "ስም", "en": "name", "rd": "ሚንግዚ", "emo": "🏷️", "note": "míngzi ስም ነው፤ jiào ደግሞ 'ተብሎ መጠራት' የሚል ግስ ነው።", "ex": [{"py": "Nǐ de míngzi shì shénme?", "am": "ስምህ ማን ነው?", "en": "What is your name?"}, {"py": "Wǒ de míngzi shì Lǐ Lì.", "am": "ስሜ ሊ ሊ ነው።", "en": "My name is Li Li."}]}, {"no": 67, "py": "míngtiān", "am": "ነገ", "en": "tomorrow", "rd": "ሚንግቲየን", "emo": "🌅", "note": "míngtiān ነገ ነው። ዛሬ jīntiān ነው።", "ex": [{"py": "Míngtiān wǒ qù Běijīng.", "am": "ነገ ቤጂንግ እሄዳለሁ።", "en": "Tomorrow I'm going to Beijing."}, {"py": "Míngtiān jiàn!", "am": "ነገ እንገናኝ!", "en": "See you tomorrow!"}]}, {"no": 68, "py": "nǎ", "am": "የትኛው", "en": "which", "rd": "ና", "emo": "🤔", "note": "nǎ 'የትኛው' ማለት ነው፤ ከነገር ጋር ይጠቀማል።", "ex": [{"py": "Nǎ běn shū?", "am": "የትኛው መጽሐፍ?", "en": "Which book?"}, {"py": "Nǐ shì nǎ guó rén?", "am": "ከየትኛው ሀገር ነህ?", "en": "Which country are you from?"}]}, {"no": 69, "py": "nǎr", "am": "የት", "en": "where", "rd": "ናር", "emo": "📍", "note": "nǎr 'የት' ማለት ነው፤ ከቦታ ጋር ይጠቀማል።", "ex": [{"py": "Shāngdiàn zài nǎr?", "am": "ሱቁ የት ነው?", "en": "Where is the shop?"}, {"py": "Nǐ zhù zài nǎr?", "am": "የት ትኖራለህ?", "en": "Where do you live?"}]}, {"no": 70, "py": "nà", "am": "ያ", "en": "that", "rd": "ና", "emo": "👉", "note": "nà 'ያ' (ሩቅ) ነው። zhè ቅርብ 'ይህ' ነው።", "ex": [{"py": "Nà shì wǒ de shū.", "am": "ያ የኔ መጽሐፍ ነው።", "en": "That is my book."}, {"py": "Nà ge rén shì shéi?", "am": "ያ ሰው ማን ነው?", "en": "Who is that person?"}]}, {"no": 71, "py": "ne", "am": "(...ስ?...ና?)", "en": "(question particle)", "rd": "ነ", "emo": "💬", "note": "(ne) 'እና አንተስ?' ለማለት ወይም ለመጠየቅ ይጠቅማል።", "ex": [{"py": "Wǒ hěn hǎo, nǐ ne?", "am": "እኔ ደህና ነኝ፣ አንተስ?", "en": "I'm fine, and you?"}, {"py": "Shū ne?", "am": "መጽሐፉስ?", "en": "What about the book?"}]}, {"no": 72, "py": "néng", "am": "መቻል (አቅም)", "en": "can / to be able to", "rd": "ነንግ", "emo": "💪", "note": "néng አቅም ወይም ፈቃድ ሲኖር ይጠቀማል። huì ችሎታ ነው።", "ex": [{"py": "Wǒ néng qù.", "am": "መሄድ እችላለሁ።", "en": "I can go."}, {"py": "Nǐ néng bāng wǒ ma?", "am": "ልትረዳኝ ትችላለህ?", "en": "Can you help me?"}]}, {"no": 73, "py": "nǐ", "am": "አንተ/አንቺ", "en": "you", "rd": "ኒ", "emo": "🫵", "note": "nǐ 'አንተ/አንቺ' ነው። ለአክብሮት nín ይጠቀማሉ።", "ex": [{"py": "Nǐ hǎo!", "am": "ሰላም!", "en": "Hello!"}, {"py": "Nǐ shì lǎoshī ma?", "am": "አንተ መምህር ነህ?", "en": "Are you a teacher?"}]}, {"no": 74, "py": "nián", "am": "ዓመት", "en": "year", "rd": "ኒየን", "emo": "📆", "note": "nián ዓመት ነው። ወር yuè ነው።", "ex": [{"py": "Jīnnián wǒ shí suì.", "am": "በዚህ ዓመት አስር ዓመቴ ነው።", "en": "This year I'm ten."}, {"py": "Míngnián wǒ qù Zhōngguó.", "am": "በሚቀጥለው ዓመት ቻይና እሄዳለሁ።", "en": "Next year I'm going to China."}]}, {"no": 75, "py": "nǚ'ér", "am": "ሴት ልጅ", "en": "daughter", "rd": "ኒዩኧር", "emo": "👧", "note": "nǚ'ér ሴት ልጅ ነው። érzi ወንድ ልጅ ነው።", "ex": [{"py": "Wǒ de nǚ'ér hěn piàoliang.", "am": "ልጄ በጣም ቆንጆ ናት።", "en": "My daughter is very pretty."}, {"py": "Tā yǒu yí ge nǚ'ér.", "am": "እሱ አንድ ሴት ልጅ አለው።", "en": "He has a daughter."}]}], "dialogues": [{"title": "ምን መግዛት ትፈልጋለህ?", "lines": [{"who": "A", "py": "Nǐ yào mǎi shénme?", "am": "ምን መግዛት ትፈልጋለህ?", "en": "What do you want to buy?"}, {"who": "B", "py": "Wǒ yào mǎi mǐfàn hé píngguǒ.", "am": "ሩዝና ፖም እፈልጋለሁ።", "en": "I want to buy rice and apples."}]}, {"title": "ይህ ድመት ያንተ ነው?", "lines": [{"who": "A", "py": "Zhè shì nǐ de māo ma?", "am": "ይህ ድመት ያንተ ነው?", "en": "Is this cat yours?"}, {"who": "B", "py": "Bú shì, zhè shì wǒ péngyou de.", "am": "አይደለም፣ የጓደኛዬ ነው።", "en": "No, it's my friend's."}]}]}, {"n": 6, "title": "ምዕራፍ 6", "range": "ቃላት 76 - 90", "intro": "ጓደኛ፣ ቆንጆ፣ ፍራፍሬ፣ ቁጥሮች፣ ቦታዎችና ጊዜ።", "words": [{"no": 76, "py": "péngyou", "am": "ጓደኛ", "en": "friend", "rd": "ፐንግዮው", "emo": "👫", "note": "péngyou ጓደኛ ነው፤ ለወንድም ለሴትም ይጠቅማል።", "ex": [{"py": "Wǒ de péngyou hěn piàoliang.", "am": "ጓደኛዬ በጣም ቆንጆ ናት።", "en": "My friend is very pretty."}, {"py": "Tā shì wǒ de hǎo péngyou.", "am": "እሱ ጥሩ ጓደኛዬ ነው።", "en": "He is my good friend."}]}, {"no": 77, "py": "piàoliang", "am": "ቆንጆ", "en": "pretty", "rd": "ፒያኦሊያንግ", "emo": "😍", "note": "piàoliang ቆንጆ ነው። ለሰውና ለነገር ይጠቅማል።", "ex": [{"py": "Zhè běn shū hěn piàoliang.", "am": "ይህ መጽሐፍ በጣም ቆንጆ ነው።", "en": "This book is very pretty."}, {"py": "Tā hěn piàoliang.", "am": "እሷ በጣም ቆንጆ ናት።", "en": "She is very pretty."}]}, {"no": 78, "py": "píngguǒ", "am": "ፖም", "en": "apple", "rd": "ፒንግጉኦ", "emo": "🍎", "note": "píngguǒ ፖም ነው። ፍራፍሬ shuǐguǒ ነው።", "ex": [{"py": "Wǒ chī píngguǒ.", "am": "ፖም እበላለሁ።", "en": "I eat apples."}, {"py": "Zhè shì yí ge píngguǒ.", "am": "ይህ አንድ ፖም ነው።", "en": "This is an apple."}]}, {"no": 79, "py": "qī", "am": "ሰባት", "en": "seven", "rd": "ቺ", "emo": "7️⃣", "note": "qī 7 ነው። ድምፁ 'ቺ' ነው።", "ex": [{"py": "Qī diǎn.", "am": "ሰባት ሰዓት።", "en": "Seven o'clock."}, {"py": "Wǒ yǒu qī běn shū.", "am": "ሰባት መጽሐፎች አሉኝ።", "en": "I have seven books."}]}, {"no": 80, "py": "qiánmiàn", "am": "ከፊት/ፊት ለፊት", "en": "in front", "rd": "ቺየንሚየን", "emo": "⬆️", "note": "qián (ፊት) + miàn (ገጽ) = ከፊት። ከኋላ hòumiàn ነው።", "ex": [{"py": "Qiánmiàn yǒu yì jiā fàndiàn.", "am": "ከፊት ለፊት አንድ ምግብ ቤት አለ።", "en": "There is a restaurant in front."}, {"py": "Tā zuò zài wǒ qiánmiàn.", "am": "እሱ ከፊቴ ተቀምጧል።", "en": "He is sitting in front of me."}]}, {"no": 81, "py": "qián", "am": "ገንዘብ", "en": "money", "rd": "ቺየን", "emo": "💰", "note": "qián ገንዘብ ነው። kuài የገንዘብ መለኪያ ነው።", "ex": [{"py": "Wǒ méiyǒu qián.", "am": "ገንዘብ የለኝም።", "en": "I don't have money."}, {"py": "Qián zài zhuōzi shàng.", "am": "ገንዘቡ ጠረጴዛው ላይ ነው።", "en": "The money is on the table."}]}, {"no": 82, "py": "qǐng", "am": "እባክህ/እባክሽ", "en": "please", "rd": "ቺንግ", "emo": "🙏", "note": "qǐng 'እባክህ' ለመጠየቅ ያገለግላል። qǐng wèn 'ይቅርታ፣ ልጠይቅ?' ማለት ነው።", "ex": [{"py": "Qǐng zuò!", "am": "እባክህ ተቀመጥ!", "en": "Please sit down!"}, {"py": "Qǐng wèn, nǐ shì nǎ guó rén?", "am": "ይቅርታ፣ ከየት ሀገር ነህ?", "en": "Excuse me, which country are you from?"}]}, {"no": 83, "py": "qù", "am": "መሄድ", "en": "to go", "rd": "ቹ", "emo": "🚶‍♂️", "note": "qù መሄድ ነው። lái መምጣት ነው።", "ex": [{"py": "Wǒ qù xuéxiào.", "am": "ወደ ትምህርት ቤት እሄዳለሁ።", "en": "I go to school."}, {"py": "Wǒmen qù gōngyuán ba!", "am": "ወደ መናፈሻ እንሂድ!", "en": "Let's go to the park!"}]}, {"no": 84, "py": "rè", "am": "ሞቃት", "en": "hot", "rd": "ረ", "emo": "🥵", "note": "rè ሞቃት ነው። lěng ቀዝቃዛ ነው።", "ex": [{"py": "Tiānqì hěn rè.", "am": "የአየር ሁኔታው በጣም ሞቃት ነው።", "en": "The weather is very hot."}, {"py": "Chá hěn rè.", "am": "ሻይ በጣም ሞቃት ነው።", "en": "The tea is very hot."}]}, {"no": 85, "py": "rén", "am": "ሰው", "en": "person", "rd": "ረን", "emo": "🧍", "note": "rén ሰው ነው። ለብዙ ሰዎች rén ብዙ ጊዜ ከ duō ጋር ይሆናል።", "ex": [{"py": "Nà ge rén shì shéi?", "am": "ያ ሰው ማን ነው?", "en": "Who is that person?"}, {"py": "Hěn duō rén.", "am": "ብዙ ሰዎች።", "en": "Many people."}]}, {"no": 86, "py": "rènshi", "am": "ማወቅ/መተዋወቅ", "en": "to know (someone)", "rd": "ረንሺ", "emo": "🤝", "note": "rènshi ሰውን ማወቅ/መተዋወቅ ነው። ነገርን ለማወቅ zhīdào ይላሉ።", "ex": [{"py": "Wǒ rènshi tā.", "am": "እሱን አውቀዋለሁ።", "en": "I know him."}, {"py": "Nǐ rènshi wǒ ma?", "am": "እኔን ታውቀኛለህ?", "en": "Do you know me?"}]}, {"no": 87, "py": "sān", "am": "ሶስት", "en": "three", "rd": "ሳን", "emo": "3️⃣", "note": "sān ሶስት ነው። ድምፁ 'ሳን' ነው።", "ex": [{"py": "Sān ge péngyou.", "am": "ሶስት ጓደኞች።", "en": "Three friends."}, {"py": "Xiànzài sān diǎn.", "am": "አሁን ሶስት ሰዓት ነው።", "en": "It's three o'clock now."}]}, {"no": 88, "py": "shāngdiàn", "am": "ሱቅ", "en": "shop / store", "rd": "ሻንዲየን", "emo": "🛍️", "note": "shāngdiàn ሱቅ ነው። ለሱቅ ያለው ቃል ይህ ነው።", "ex": [{"py": "Shāngdiàn zài nǎr?", "am": "ሱቁ የት ነው?", "en": "Where is the shop?"}, {"py": "Wǒ qù shāngdiàn mǎi shuǐguǒ.", "am": "ፍራፍሬ ለመግዛት ወደ ሱቅ እሄዳለሁ።", "en": "I'm going to the shop to buy fruit."}]}, {"no": 89, "py": "shàng", "am": "ላይ", "en": "on / above", "rd": "ሻንግ", "emo": "🔼", "note": "shàng 'ላይ' ማለት ነው። ከ zài ጋር ቦታን ያሳያል።", "ex": [{"py": "Shū zài zhuōzi shàng.", "am": "መጽሐፉ ጠረጴዛው ላይ ነው።", "en": "The book is on the table."}, {"py": "Shàng chē!", "am": "ወደ መኪና ግባ!", "en": "Get in the car!"}]}, {"no": 90, "py": "shàngwǔ", "am": "ጠዋት (እስከ ቀትር)", "en": "morning", "rd": "ሻንግዉ", "emo": "🌅", "note": "(shàngwǔ) ጠዋት፤ (zhōngwǔ) ቀትር፤ (xiàwǔ) ከሰዓት።", "ex": [{"py": "Shàngwǔ wǒ qù shāngdiàn mǎi píngguǒ.", "am": "ጠዋት ሱቅ ሄጄ ፖም እገዛለሁ።", "en": "In the morning I go to the shop to buy apples."}, {"py": "Zǎoshang hǎo!", "am": "እንደምን አደርክ!", "en": "Good morning!"}]}], "dialogues": [{"title": "ይቅርታ፣ ታውቀዋለህ?", "lines": [{"who": "A", "py": "Qǐng wèn, nǐ rènshi tā ma?", "am": "ይቅርታ፣ እሱን ታውቀዋለህ?", "en": "Excuse me, do you know him?"}, {"who": "B", "py": "Wǒ rènshi tā, tā shì wǒ de péngyou.", "am": "አውቀዋለሁ፣ እሱ ጓደኛዬ ነው።", "en": "I know him, he is my friend."}]}, {"title": "ጠዋት የት ትሄዳለህ?", "lines": [{"who": "A", "py": "Shàngwǔ nǐ qù nǎr?", "am": "ጠዋት የት ትሄዳለህ?", "en": "Where are you going in the morning?"}, {"who": "B", "py": "Wǒ qù shāngdiàn mǎi shuǐguǒ.", "am": "ፍራፍሬ ለመግዛት ወደ ሱቅ እሄዳለሁ።", "en": "I'm going to the shop to buy fruit."}]}]}, {"n": 7, "title": "ምዕራፍ 7", "range": "ቃላት 91 - 105", "intro": "ጥያቄ ቃላት፣ ቁጥሮች፣ መጽሐፍ፣ ውሃ፣ መተኛትና ሰዎች።", "words": [{"no": 91, "py": "shǎo", "am": "ጥቂት", "en": "few / little", "rd": "ሻኦ", "emo": "🔽", "note": "shǎo ጥቂት ነው። duō ብዙ ነው። ተቃራኒ ጥንድ ናቸው።", "ex": [{"py": "Wǒ yǒu shǎo qián.", "am": "ጥቂት ገንዘብ አለኝ።", "en": "I have a little money."}, {"py": "Rén hěn shǎo.", "am": "ሰዎች ጥቂት ናቸው።", "en": "There are few people."}]}, {"no": 92, "py": "shéi", "am": "ማን", "en": "who", "rd": "ሼይ", "emo": "🤷", "note": "shéi 'ማን' ማለት ነው። በዓረፍተ ነገሩ ውስጥ ቦታው ቀድሞ ነው።", "ex": [{"py": "Shéi shì nǐ de lǎoshī?", "am": "የአንተ መምህር ማን ነው?", "en": "Who is your teacher?"}, {"py": "Shéi lái?", "am": "ማን ይመጣል?", "en": "Who is coming?"}]}, {"no": 93, "py": "shénme", "am": "ምን", "en": "what", "rd": "ሼንሜ", "emo": "❓", "note": "shénme 'ምን' ማለት ነው። ዓረፍተ ነገሩ ውስጥ ጥያቄው ያለበት ቦታ ይቀመጣል።", "ex": [{"py": "Zhè shì shénme?", "am": "ይህ ምንድነው?", "en": "What is this?"}, {"py": "Nǐ chī shénme?", "am": "ምን ትበላለህ?", "en": "What are you eating?"}]}, {"no": 94, "py": "shí", "am": "አስር", "en": "ten", "rd": "ሽ", "emo": "🔟", "note": "shí አስር ነው። ዕድሜን ሲናገሩ shí suì ይላሉ (የ10 ዓመት)።", "ex": [{"py": "Wǒ shí suì.", "am": "የአስር ዓመት ልጅ ነኝ።", "en": "I am ten years old."}, {"py": "Shí ge rén.", "am": "አስር ሰዎች።", "en": "Ten people."}]}, {"no": 95, "py": "shíhou", "am": "ጊዜ/ወቅት", "en": "time / moment", "rd": "ሽሆው", "emo": "⏳", "note": "shíhou ጊዜ ወይም ወቅት ነው። chī fàn de shíhou = ምግብ ሲበሉ።", "ex": [{"py": "Wǒ shuìjiào de shíhou, tā hái zài kàn diànshì.", "am": "እኔ ስተኛ እሷ አሁንም ቴሌቪዥን እያየች ነበር።", "en": "When I was sleeping, she was still watching TV."}, {"py": "Zhè shì shénme shíhou?", "am": "ይህ ምን ሰዓት ነው?", "en": "What time is this?"}]}, {"no": 96, "py": "shì", "am": "ነው/ናት", "en": "to be", "rd": "ሽ", "emo": "🟰", "note": "shì 'ነው/ናት' ማለት ነው። ቅፅል ጋር አያስፈልግም (hěn ይጠቀሙ)።", "ex": [{"py": "Wǒ shì xuésheng.", "am": "እኔ ተማሪ ነኝ።", "en": "I am a student."}, {"py": "Tā shì wǒ de nǚ'ér.", "am": "እሷ ልጄ ናት።", "en": "She is my daughter."}]}, {"no": 97, "py": "shū", "am": "መጽሐፍ", "en": "book", "rd": "ሹ", "emo": "📚", "note": "shū መጽሐፍ ነው። ለመቁጠር běn ይጠቀሙ።", "ex": [{"py": "Zhè běn shū shì wǒ de.", "am": "ይህ መጽሐፍ የኔ ነው።", "en": "This book is mine."}, {"py": "Wǒ xǐhuan dú shū.", "am": "መጽሐፍ ማንበብ እወዳለሁ።", "en": "I like reading books."}]}, {"no": 98, "py": "shuǐ", "am": "ውሃ", "en": "water", "rd": "ሹይ", "emo": "💧", "note": "shuǐ ውሃ ነው። ውሃ ለመጠጣት hē ይጠቀሙ።", "ex": [{"py": "Wǒ yào shuǐ.", "am": "ውሃ እፈልጋለሁ።", "en": "I want water."}, {"py": "Shuǐ hěn lěng.", "am": "ውሃው ቀዝቃዛ ነው።", "en": "The water is cold."}]}, {"no": 99, "py": "shuǐguǒ", "am": "ፍራፍሬ", "en": "fruit", "rd": "ሹይጉኦ", "emo": "🍇", "note": "shuǐguǒ ፍራፍሬ ነው። ፖም píngguǒ ነው።", "ex": [{"py": "Wǒ xǐhuan shuǐguǒ.", "am": "ፍራፍሬ እወዳለሁ።", "en": "I like fruit."}, {"py": "Tā chī shuǐguǒ.", "am": "እሱ ፍራፍሬ ይበላል።", "en": "He eats fruit."}]}, {"no": 100, "py": "shuìjiào", "am": "መተኛት", "en": "to sleep", "rd": "ሹይጂያኦ", "emo": "😴", "note": "shuìjiào መተኛት ነው። ሁለት ክፍሎች (shuì + jiào) ያሉት ቃል ሲሆን ሁለቱም 'መተኛት' የሚል ትርጉም አላቸው።", "ex": [{"py": "Wǒ xiǎng shuìjiào.", "am": "መተኛት እፈልጋለሁ።", "en": "I want to sleep."}, {"py": "Nǐ shuìjiào le ma?", "am": "ተኝተሃል?", "en": "Have you slept?"}]}, {"no": 101, "py": "shuō", "am": "መናገር", "en": "to speak", "rd": "ሹኦ", "emo": "🗣️", "note": "shuō መናገር ነው። ቋንቋን ለመናገር shuō Hànyǔ ይላሉ።", "ex": [{"py": "Tā shuō Hànyǔ.", "am": "እሱ ቻይንኛ ይናገራል።", "en": "He speaks Chinese."}, {"py": "Qǐng shuō ba!", "am": "እባክህ ተናገር!", "en": "Please speak!"}]}, {"no": 102, "py": "sì", "am": "አራት", "en": "four", "rd": "ሲ", "emo": "4️⃣", "note": "sì አራት ነው። ድምፁ 'ሲ' ነው።", "ex": [{"py": "Sì gè bēizi.", "am": "አራት ብርጭቆዎች።", "en": "Four cups."}, {"py": "Xiànzài sì diǎn.", "am": "አሁን አራት ሰዓት ነው።", "en": "It's four o'clock now."}]}, {"no": 103, "py": "suì", "am": "ዓመት (የዕድሜ)", "en": "years old (age)", "rd": "ሱይ", "emo": "🎂", "note": "suì ዕድሜን ለመናገር ይጠቅማል። nián ዓመት ነው፤ suì ዕድሜ ነው።", "ex": [{"py": "Wǒ sān suì.", "am": "እኔ ሶስት ዓመቴ ነው።", "en": "I am three years old."}, {"py": "Tā sì shí suì.", "am": "እሱ አርባ ዓመቱ ነው።", "en": "He is forty years old."}]}, {"no": 104, "py": "tā", "am": "እሱ", "en": "he", "rd": "ታ", "emo": "🙋‍♂️", "note": "tā 'እሱ' ማለት ነው። ፒንዪኑ ለ'እሱ' እና ለ'እሷ' አንድ ነው፤ ጾታው ከዓረፍተ ነገሩ ይታወቃል።", "ex": [{"py": "Tā hěn gāoxìng.", "am": "እሱ በጣም ደስተኛ ነው።", "en": "He is very happy."}, {"py": "Tā shì wǒ de péngyou.", "am": "እሱ ጓደኛዬ ነው።", "en": "He is my friend."}]}, {"no": 105, "py": "tā", "am": "እሷ", "en": "she", "rd": "ታ", "emo": "🙋‍♀️", "note": "tā 'እሷ' ማለትም ነው። አጠራሩ ከ'እሱ' ጋር አንድ ነው፤ ዓረፍተ ነገሩን አይተህ ትለያለህ።", "ex": [{"py": "Tā hěn piàoliang.", "am": "እሷ በጣም ቆንጆ ናት።", "en": "She is very pretty."}, {"py": "Tā shì lǎoshī.", "am": "እሷ መምህር ናት።", "en": "She is a teacher."}]}], "dialogues": [{"title": "ጓደኛህ ማን ነው?", "lines": [{"who": "A", "py": "Shéi shì nǐ de péngyou?", "am": "ጓደኛህ ማን ነው?", "en": "Who is your friend?"}, {"who": "B", "py": "Tā shì wǒ de tóngxué.", "am": "የክፍል ጓደኛዬ ነው።", "en": "She/He is my classmate."}]}, {"title": "ምን አልክ?", "lines": [{"who": "A", "py": "Nǐ shuō shénme?", "am": "ምን አልክ?", "en": "What did you say?"}, {"who": "B", "py": "Wǒ shuō, shuǐ hěn rè!", "am": "ውሃው በጣም ሞቃት ነው አልኩ!", "en": "I said, the water is very hot!"}]}]}, {"n": 8, "title": "ምዕራፍ 8", "range": "ቃላት 106 - 120", "intro": "የአየር ሁኔታ፣ ማዳመጥ፣ ዝናብ፣ እኔና እኛ፣ አሁን እና ሌሎችም።", "words": [{"no": 106, "py": "tài", "am": "በጣም/ከልክ በላይ", "en": "too / very", "rd": "ታይ", "emo": "🔥", "note": "tài 'በጣም/ከልክ በላይ' ማለት ነው። ብዙ ጊዜ ከ le ጋር ይመጣል (tài hǎo le = በጣም ጥሩ ሆነ!)።", "ex": [{"py": "Tài hǎo le!", "am": "በጣም ጥሩ ሆነ!", "en": "That's great!"}, {"py": "Tài guì le!", "am": "በጣም ውድ ነው!", "en": "It's too expensive!"}]}, {"no": 107, "py": "tiānqì", "am": "የአየር ሁኔታ", "en": "weather", "rd": "ቲየንቺ", "emo": "🌤️", "note": "tiān (ሰማይ) + qì (አየር) = የአየር ሁኔታ።", "ex": [{"py": "Jīntiān tiānqì hěn hǎo.", "am": "ዛሬ የአየር ሁኔታው ጥሩ ነው።", "en": "Today the weather is good."}, {"py": "Tiānqì hěn rè.", "am": "የአየር ሁኔታው ሞቃት ነው።", "en": "The weather is hot."}]}, {"no": 108, "py": "tīng", "am": "ማዳመጥ", "en": "to listen", "rd": "ቲንግ", "emo": "👂", "note": "tīng ማዳመጥ ነው። ለመስማት (ያለፈቃድ) tīng jiàn ይላሉ።", "ex": [{"py": "Wǒ tīng nǐ shuō.", "am": "ያልከውን እሰማለሁ።", "en": "I'm listening to you."}, {"py": "Qǐng tīng wǒ shuō.", "am": "እባክህ አዳምጠኝ።", "en": "Please listen to me."}]}, {"no": 109, "py": "tóngxué", "am": "የክፍል ጓደኛ", "en": "classmate", "rd": "ቶንሹዌ", "emo": "🧑‍🤝‍🧑", "note": "tóng (አንድ) + xué (ትምህርት) = የክፍል ጓደኛ።", "ex": [{"py": "Tā shì wǒ de tóngxué.", "am": "እሱ/እሷ የክፍል ጓደኛዬ ነው/ናት።", "en": "He/She is my classmate."}, {"py": "Wǒ de tóngxué hěn cōngming.", "am": "የክፍል ጓደኛዬ ብልህ ነው።", "en": "My classmate is smart."}]}, {"no": 110, "py": "wèi", "am": "ሄሎ (በስልክ)", "en": "hello (on the phone)", "rd": "ዌይ", "emo": "📞", "note": "wèi በስልክ ላይ 'ሄሎ' ለማለት ይጠቅማል።", "ex": [{"py": "Wèi! Nǐ hǎo ma?", "am": "ሄሎ! ደህና ነህ?", "en": "Hello! How are you?"}, {"py": "Wèi, shì wǒ.", "am": "ሄሎ፣ እኔ ነኝ።", "en": "Hello, it's me."}]}, {"no": 111, "py": "wǒ", "am": "እኔ", "en": "I / me", "rd": "ዎ", "emo": "🙋", "note": "wǒ 'እኔ' ነው። ለብዙ ሰዎች wǒmen ነው።", "ex": [{"py": "Wǒ shì xuésheng.", "am": "እኔ ተማሪ ነኝ።", "en": "I am a student."}, {"py": "Wǒ ài nǐ.", "am": "እወድሃለሁ።", "en": "I love you."}]}, {"no": 112, "py": "wǒmen", "am": "እኛ", "en": "we", "rd": "ዎመን", "emo": "👥", "note": "wǒmen 'እኛ' ነው። ከ wǒ 'እኔ' ጋር አትደባልቀው።", "ex": [{"py": "Wǒmen yìqǐ qù ba!", "am": "አብረን እንሂድ!", "en": "Let's go together!"}, {"py": "Wǒmen dōu hěn hǎo.", "am": "ሁላችንም ደህና ነን።", "en": "We are all well."}]}, {"no": 113, "py": "wǔ", "am": "አምስት", "en": "five", "rd": "ዉ", "emo": "5️⃣", "note": "wǔ አምስት ነው። ድምፁ 'ዉ' ነው።", "ex": [{"py": "Wǔ gè rén.", "am": "አምስት ሰዎች።", "en": "Five people."}, {"py": "Xiànzài wǔ diǎn.", "am": "አሁን አምስት ሰዓት ነው።", "en": "It's five o'clock now."}]}, {"no": 114, "py": "xǐhuan", "am": "መውደድ", "en": "to like", "rd": "ሺሁዋን", "emo": "💗", "note": "xǐhuan መውደድ ወይም መውደድ ነው። ከ ài የበለጠ ቀለል ያለ ነው።", "ex": [{"py": "Wǒ xǐhuan chá.", "am": "ሻይ እወዳለሁ።", "en": "I like tea."}, {"py": "Nǐ xǐhuan shénme?", "am": "ምን ትወዳለህ?", "en": "What do you like?"}]}, {"no": 115, "py": "xià", "am": "ታች", "en": "down / below", "rd": "ሺያ", "emo": "⬇️", "note": "xià 'ታች' ማለት ነው። ከ shàng (ላይ) ተቃራኒ ነው።", "ex": [{"py": "Shū zài zhuōzi xià.", "am": "መጽሐፉ ጠረጴዛው ስር ነው።", "en": "The book is under the table."}, {"py": "Qǐng xià chē.", "am": "እባክህ ከመኪና ውረድ።", "en": "Please get off the car."}]}, {"no": 116, "py": "xiàwǔ", "am": "ከሰዓት", "en": "afternoon", "rd": "ሺያዉ", "emo": "🌇", "note": "(xiàwǔ) 'ከሰዓት' ነው። shàngwǔ ጠዋት ነው።", "ex": [{"py": "Xiàwǔ wǒ qù xuéxiào.", "am": "ከሰዓት ወደ ትምህርት ቤት እሄዳለሁ።", "en": "In the afternoon I go to school."}, {"py": "Xiàwǔ hǎo!", "am": "ከሰዓት ደህና ዋል!", "en": "Good afternoon!"}]}, {"no": 117, "py": "xiàyǔ", "am": "ዝናብ መዝነብ", "en": "to rain", "rd": "ሺያዩ", "emo": "🌧️", "note": "xià (መውረድ) + yǔ (ዝናብ) = ዝናብ መዝነብ። ዝናብ yǔ ነው።", "ex": [{"py": "Xiàyǔ le.", "am": "ዝናብ ዘነበ።", "en": "It rained."}, {"py": "Jīntiān bú xiàyǔ.", "am": "ዛሬ ዝናብ አይዘንብም።", "en": "It doesn't rain today."}]}, {"no": 118, "py": "xiānsheng", "am": "ሚስተር/ጌታ", "en": "Mr. / sir", "rd": "ሺየንሸንግ", "emo": "🧔", "note": "xiānsheng ለወንድ 'ሚስተር' ወይም 'ጌታ' ለማለት ይጠቅማል።", "ex": [{"py": "Xiānsheng, qǐng zuò!", "am": "ሚስተር፣ እባክህ ተቀመጥ!", "en": "Mr., please sit down!"}, {"py": "Wǒ shì Wáng xiānsheng.", "am": "እኔ ሚስተር ዋንግ ነኝ።", "en": "I am Mr. Wang."}]}, {"no": 119, "py": "xiànzài", "am": "አሁን", "en": "now", "rd": "ሺየንዛይ", "emo": "⏰", "note": "xiànzài አሁን ነው። ትናንት zuótiān ነው።", "ex": [{"py": "Xiànzài wǒ hěn hǎo.", "am": "አሁን በጣም ደህና ነኝ።", "en": "I'm very well now."}, {"py": "Xiànzài jǐ diǎn?", "am": "አሁን ስንት ሰዓት ነው?", "en": "What time is it now?"}]}, {"no": 120, "py": "xiǎng", "am": "መፈለግ/ማሰብ", "en": "to want / to think", "rd": "ሺያንግ", "emo": "💭", "note": "xiǎng 'መፈለግ' ወይም 'ማሰብ' ማለት ነው። ከቃሉ በኋላ ግስ ይመጣል።", "ex": [{"py": "Wǒ xiǎng hē shuǐ.", "am": "ውሃ መጠጣት እፈልጋለሁ።", "en": "I want to drink water."}, {"py": "Wǒ xiǎng yí xiǎng.", "am": "ትንሽ አስባለሁ።", "en": "Let me think a bit."}]}], "dialogues": [{"title": "የአየር ሁኔታው እንዴት ነው?", "lines": [{"who": "A", "py": "Jīntiān tiānqì zěnmeyàng?", "am": "ዛሬ የአየር ሁኔታው እንዴት ነው?", "en": "How is the weather today?"}, {"who": "B", "py": "Tiānqì hěn hǎo, wǒmen qù gōngyuán ba!", "am": "አየሩ ጥሩ ነው፣ ወደ መናፈሻ እንሂድ!", "en": "The weather is good, let's go to the park!"}]}, {"title": "ያልኩህን ሰማህ?", "lines": [{"who": "A", "py": "Nǐ tīng wǒ shuō ma?", "am": "ያልኩህን ሰማህ?", "en": "Did you hear what I said?"}, {"who": "B", "py": "Wǒ tīng le, xièxie!", "am": "ሰማሁ፣ አመሰግናለሁ!", "en": "I heard, thank you!"}]}]}, {"n": 9, "title": "ምዕራፍ 9", "range": "ቃላት 121 - 135", "intro": "ትንሽ፣ መጻፍ፣ ምስጋና፣ ትምህርት ቤት፣ ሐኪምና ሆስፒታል።", "words": [{"no": 121, "py": "xiǎo", "am": "ትንሽ", "en": "small", "rd": "ሺያኦ", "emo": "🐭", "note": "xiǎo ትንሽ ነው። dà ትልቅ ነው። ለወጣት ሴት xiǎojiě ነው።", "ex": [{"py": "Xiǎo māo hěn piàoliang.", "am": "ትንሽ ድመት በጣም ቆንጆ ናት።", "en": "The little cat is very pretty."}, {"py": "Wǒ yǒu yì ge xiǎo fángzi.", "am": "አንድ ትንሽ ቤት አለኝ።", "en": "I have a small house."}]}, {"no": 122, "py": "xiǎojiě", "am": "ወይዘሪት", "en": "Miss", "rd": "ሺያኦጂየ", "emo": "👩‍🦰", "note": "xiǎojiě ለወጣት ሴት 'ወይዘሪት' ለማለት ይጠቅማል።", "ex": [{"py": "Xiǎojiě, qǐng zuò!", "am": "ወይዘሪት፣ እባክሽ ተቀመጭ!", "en": "Miss, please sit down!"}, {"py": "Xiǎojiě, nǐ hǎo!", "am": "ሰላም ወይዘሪት!", "en": "Hello, Miss!"}]}, {"no": 123, "py": "xiē", "am": "ጥቂት/አንዳንድ", "en": "some", "rd": "ሺየ", "emo": "🔸", "note": "xiē 'አንዳንድ' ወይም 'ጥቂት' ማለት ነው። ከ ቃላት ብዛት ጋር ይጠቅማል።", "ex": [{"py": "Wǒ mǎi xiē shuǐguǒ.", "am": "አንዳንድ ፍራፍሬ እገዛለሁ።", "en": "I'll buy some fruit."}, {"py": "Zhuōzi shàng yǒu xiē shū.", "am": "ጠረጴዛው ላይ አንዳንድ መጽሐፍት አሉ።", "en": "There are some books on the table."}]}, {"no": 124, "py": "xiě", "am": "መጻፍ", "en": "to write", "rd": "ሺየ", "emo": "✍️", "note": "xiě መጻፍ ነው። xiě zì ፊደል መጻፍ ነው።", "ex": [{"py": "Wǒ xiě zì.", "am": "ፊደል እጽፋለሁ።", "en": "I write characters."}, {"py": "Qǐng xiě ba!", "am": "እባክህ ጻፍ!", "en": "Please write!"}]}, {"no": 125, "py": "xièxie", "am": "አመሰግናለሁ", "en": "thank you", "rd": "ሺየሺየ", "emo": "🙏", "note": "xièxie አመሰግናለሁ ነው። ሁለተኛው ቃል ቀለል ብሎ ይነገራል።", "ex": [{"py": "Xièxie nǐ!", "am": "አመሰግንሃለሁ!", "en": "Thank you!"}, {"py": "Hěn duō xièxie!", "am": "በጣም አመሰግናለሁ!", "en": "Thank you very much!"}]}, {"no": 126, "py": "xīngqī", "am": "ሳምንት", "en": "week", "rd": "ሲንግቺ", "emo": "🗓️", "note": "xīngqī ሳምንት ነው። ቀናት xīngqī yī (ሰኞ)፣ xīngqī èr (ማክሰኞ)… ይባላሉ።", "ex": [{"py": "Jīntiān shì xīngqī sān.", "am": "ዛሬ ረቡዕ ነው።", "en": "Today is Wednesday."}, {"py": "Yí ge xīngqī.", "am": "አንድ ሳምንት።", "en": "One week."}]}, {"no": 127, "py": "xuésheng", "am": "ተማሪ", "en": "student", "rd": "ሹዌሼንግ", "emo": "🧑‍🎓", "note": "xuésheng ተማሪ ነው። መምህር lǎoshī ነው።", "ex": [{"py": "Wǒ shì xuésheng.", "am": "እኔ ተማሪ ነኝ።", "en": "I am a student."}, {"py": "Tā shì xuésheng ma?", "am": "እሱ ተማሪ ነው?", "en": "Is he a student?"}]}, {"no": 128, "py": "xuéxí", "am": "መማር", "en": "to study", "rd": "ሹዌሺ", "emo": "📚", "note": "xuéxí መማር ነው። xuéxí Hànyǔ = ቻይንኛ መማር።", "ex": [{"py": "Wǒ xuéxí Hànyǔ.", "am": "ቻይንኛ እማራለሁ።", "en": "I study Chinese."}, {"py": "Wǒmen yìqǐ xuéxí ba!", "am": "አብረን እንማር!", "en": "Let's study together!"}]}, {"no": 129, "py": "xuéxiào", "am": "ትምህርት ቤት", "en": "school", "rd": "ሹዌሺያኦ", "emo": "🏫", "note": "xuéxiào ትምህርት ቤት ነው። xuéxí መማር ነው።", "ex": [{"py": "Wǒ qù xuéxiào.", "am": "ወደ ትምህርት ቤት እሄዳለሁ።", "en": "I go to school."}, {"py": "Xuéxiào hěn dà.", "am": "ትምህርት ቤቱ በጣም ትልቅ ነው።", "en": "The school is very big."}]}, {"no": 130, "py": "yī", "am": "አንድ", "en": "one", "rd": "ዪ", "emo": "1️⃣", "note": "yī አንድ ነው። ከ4ኛ ቃና በፊት yí፣ ከሌሎቹ በፊት yì ይሆናል (yí gè፣ yì běn)።", "ex": [{"py": "Yí ge rén.", "am": "አንድ ሰው።", "en": "One person."}, {"py": "Yì běn shū.", "am": "አንድ መጽሐፍ።", "en": "One book."}]}, {"no": 131, "py": "yìdiǎnr", "am": "ትንሽ", "en": "a little", "rd": "ዪዲየንአር", "emo": "🤏", "note": "yìdiǎnr 'ትንሽ' ለማለት ይጠቅማል (ለነገር ብዛት)።", "ex": [{"py": "Qǐng gěi wǒ yìdiǎnr shuǐ.", "am": "እባክህ ትንሽ ውሃ ስጠኝ።", "en": "Please give me a little water."}, {"py": "Wǒ yǒu yìdiǎnr shíjiān.", "am": "ትንሽ ጊዜ አለኝ።", "en": "I have a little time."}]}, {"no": 132, "py": "yīshēng", "am": "ሐኪም", "en": "doctor", "rd": "ዪሸንግ", "emo": "👨‍⚕️", "note": "yīshēng ሐኪም ነው። ሆስፒታል yīyuàn ነው።", "ex": [{"py": "Yīshēng zài yīyuàn lǐ.", "am": "ሐኪሙ ሆስፒታል ውስጥ ነው።", "en": "The doctor is in the hospital."}, {"py": "Wǒ xiǎng kànkan yīshēng.", "am": "ሐኪም ማየት እፈልጋለሁ።", "en": "I want to see a doctor."}]}, {"no": 133, "py": "yīyuàn", "am": "ሆስፒታል", "en": "hospital", "rd": "ዪዩየን", "emo": "🏥", "note": "yīyuàn ሆስፒታል ነው። yīshēng ሐኪም ነው።", "ex": [{"py": "Tā zài yīyuàn.", "am": "እሱ ሆስፒታል ነው።", "en": "He is at the hospital."}, {"py": "Yīyuàn yuǎn ma?", "am": "ሆስፒታሉ ሩቅ ነው?", "en": "Is the hospital far?"}]}, {"no": 134, "py": "yīfu", "am": "ልብስ", "en": "clothes", "rd": "ዪፉ", "emo": "👕", "note": "yīfu ልብስ ነው። ልብስ ለመልበስ chuān ይጠቀሙ።", "ex": [{"py": "Wǒ de yīfu hěn gānjìng.", "am": "ልብሴ ንጹህ ነው።", "en": "My clothes are clean."}, {"py": "Zhè jiàn yīfu hěn piàoliang.", "am": "ይህ ልብስ በጣም ቆንጆ ነው።", "en": "This piece of clothing is very pretty."}]}, {"no": 135, "py": "yǐzi", "am": "ወንበር", "en": "chair", "rd": "ዪዚ", "emo": "🪑", "note": "yǐzi ወንበር ነው። ጠረጴዛ zhuōzi ነው።", "ex": [{"py": "Yǐzi shàng yǒu shū.", "am": "ወንበሩ ላይ መጽሐፍ አለ።", "en": "There is a book on the chair."}, {"py": "Qǐng zuò zài yǐzi shàng.", "am": "እባክህ ወንበር ላይ ተቀመጥ።", "en": "Please sit on the chair."}]}], "dialogues": [{"title": "ልብስሽ ቆንጆ ነው!", "lines": [{"who": "A", "py": "Xiǎojiě, nǐ de yīfu hěn piàoliang!", "am": "ወይዘሪት፣ ልብስሽ በጣም ቆንጆ ነው!", "en": "Miss, your clothes are very pretty!"}, {"who": "B", "py": "Xièxie!", "am": "አመሰግናለሁ!", "en": "Thank you!"}]}, {"title": "ተማሪ ነህ?", "lines": [{"who": "A", "py": "Nǐ shì xuésheng ma?", "am": "ተማሪ ነህ?", "en": "Are you a student?"}, {"who": "B", "py": "Shì, wǒ zài xuéxiào xuéxí.", "am": "አዎ፣ ትምህርት ቤት እማራለሁ።", "en": "Yes, I study at school."}]}]}, {"n": 10, "title": "ምዕራፍ 10", "range": "ቃላት 136 - 150", "intro": "ማግኘት፣ ወር፣ ደህና ሁን፣ መኖር፣ ጠረጴዛ፣ ፊደል፣ ትናንትና ቃላት።", "words": [{"no": 136, "py": "yǒu", "am": "አለው/አላት", "en": "to have", "rd": "ዮው", "emo": "🤲", "note": "yǒu 'አለው/አላት' ማለት ነው። የለውም méiyǒu ነው።", "ex": [{"py": "Wǒ yǒu yì běn shū.", "am": "አንድ መጽሐፍ አለኝ።", "en": "I have a book."}, {"py": "Tā yǒu yí ge māo.", "am": "እሱ አንድ ድመት አለው።", "en": "He has a cat."}]}, {"no": 137, "py": "yuè", "am": "ወር", "en": "month", "rd": "ዩዌ", "emo": "🌙", "note": "yuè ወር ነው። nián ዓመት ነው።", "ex": [{"py": "Yí ge yuè.", "am": "አንድ ወር።", "en": "One month."}, {"py": "Wǒ shēngrì zài shí yuè.", "am": "ልደቴ በጥቅምት ወር ነው።", "en": "My birthday is in October."}]}, {"no": 138, "py": "zàijiàn", "am": "ቻው/ደህና ሁን", "en": "goodbye", "rd": "ዛይጂየን", "emo": "👋", "note": "zàijiàn 'ቻው' ወይም 'ደህና ሁን' ማለት ነው።", "ex": [{"py": "Zàijiàn!", "am": "ቻው!", "en": "Goodbye!"}, {"py": "Míngtiān jiàn!", "am": "ነገ እንገናኝ!", "en": "See you tomorrow!"}]}, {"no": 139, "py": "zài", "am": "ላይ/ውስጥ (መገኘት)", "en": "at / in", "rd": "ዛይ", "emo": "📍", "note": "zài የሆነ ቦታ መገኘትን ይገልጻል (ለምሳሌ 'ቤት ነኝ')።", "ex": [{"py": "Wǒ zài jiā.", "am": "ቤት ነኝ።", "en": "I am at home."}, {"py": "Shū zài zhuōzi shàng.", "am": "መጽሐፉ ጠረጴዛው ላይ ነው።", "en": "The book is on the table."}]}, {"no": 140, "py": "zěnme", "am": "እንዴት", "en": "how", "rd": "ዘንሜ", "emo": "🤔", "note": "zěnme 'እንዴት' ማለት ነው። ለመንገድ ወይም ለዘዴ ይጠቅማል።", "ex": [{"py": "Nǐ zěnme qù?", "am": "እንዴት ትሄዳለህ?", "en": "How are you going?"}, {"py": "Zhè ge zěnme shuō?", "am": "ይህንን እንዴት ትላለህ?", "en": "How do you say this?"}]}, {"no": 141, "py": "zěnmeyàng", "am": "እንዴት ነው?", "en": "how about / how is it", "rd": "ዘንሜያንግ", "emo": "💬", "note": "zěnmeyàng 'እንዴት ነው?' ብሎ ለመጠየቅ ይጠቅማል።", "ex": [{"py": "Jīntiān tiānqì zěnmeyàng?", "am": "ዛሬ የአየር ሁኔታው እንዴት ነው?", "en": "How's the weather today?"}, {"py": "Nǐ zěnmeyàng?", "am": "እንዴት ነህ?", "en": "How are you?"}]}, {"no": 142, "py": "zhè", "am": "ይህ", "en": "this", "rd": "ጀ", "emo": "👇", "note": "zhè 'ይህ' ነው (ቅርብ)። nà 'ያ' ነው (ሩቅ)።", "ex": [{"py": "Zhè shì wǒ de bēizi.", "am": "ይህ የኔ ብርጭቆ ነው።", "en": "This is my cup."}, {"py": "Zhè ge zhuōzi hěn dà.", "am": "ይህ ጠረጴዛ ትልቅ ነው።", "en": "This table is big."}]}, {"no": 143, "py": "Zhōngguó", "am": "ቻይና", "en": "China", "rd": "ጁንጉኦ", "emo": "🇨🇳", "note": "Zhōngguó ቻይና ነው። የቻይና ቋንቋ Hànyǔ ነው።", "ex": [{"py": "Wǒ qù Zhōngguó.", "am": "ቻይና እሄዳለሁ።", "en": "I'm going to China."}, {"py": "Wǒ shì Zhōngguó rén.", "am": "እኔ ቻይናዊ ነኝ።", "en": "I am Chinese."}]}, {"no": 144, "py": "zhōngwǔ", "am": "ቀትር", "en": "noon", "rd": "ጁንዉ", "emo": "🌞", "note": "zhōngwǔ ቀትር ነው። shàngwǔ ጠዋት፣ xiàwǔ ከሰዓት ነው።", "ex": [{"py": "Zhōngwǔ tiānqì tài rè le.", "am": "ቀትር ላይ አየሩ በጣም ሞቃት ሆነ።", "en": "At noon the weather became very hot."}, {"py": "Wǒ zhōngwǔ chī fàn.", "am": "ቀትር ላይ ምግብ እበላለሁ።", "en": "I eat lunch at noon."}]}, {"no": 145, "py": "zhù", "am": "መኖር", "en": "to live", "rd": "ጁ", "emo": "🏘️", "note": "zhù መኖር ነው። zhù zài... ማለት 'በ... ትኖራለህ' ማለት ነው።", "ex": [{"py": "Wǒ zhù zài Běijīng.", "am": "ቤጂንግ እኖራለሁ።", "en": "I live in Beijing."}, {"py": "Tā zhù zài shāngdiàn fùjìn.", "am": "እሱ በሱቁ አጠገብ ይኖራል።", "en": "He lives near the shop."}]}, {"no": 146, "py": "zhuōzi", "am": "ጠረጴዛ", "en": "table", "rd": "ጁዚ", "emo": "🪑", "note": "zhuōzi ጠረጴዛ ነው። ወንበር yǐzi ነው።", "ex": [{"py": "Shū zài zhuōzi shàng.", "am": "መጽሐፉ ጠረጴዛው ላይ ነው።", "en": "The book is on the table."}, {"py": "Zhuōzi shàng yǒu shuǐ.", "am": "ጠረጴዛው ላይ ውሃ አለ።", "en": "There is water on the table."}]}, {"no": 147, "py": "zì", "am": "ፊደል/ቃል", "en": "character / word", "rd": "ዚ", "emo": "🔤", "note": "zì ፊደል ወይም ቃል ነው። xiě zì ፊደል መጻፍ ነው።", "ex": [{"py": "Zhè ge zì zěnme xiě?", "am": "ይህ ፊደል እንዴት ይጻፋል?", "en": "How is this character written?"}, {"py": "Wǒ bú rènshi zhè ge zì.", "am": "ይህን ቃል አላውቀውም።", "en": "I don't know this word."}]}, {"no": 148, "py": "zuótiān", "am": "ትናንት", "en": "yesterday", "rd": "ዙኦቲየን", "emo": "⏪", "note": "zuótiān ትናንት ነው። jīntiān ዛሬ ነው።", "ex": [{"py": "Zuótiān wǒ zài jiā.", "am": "ትናንት ቤት ነበርኩ።", "en": "Yesterday I was at home."}, {"py": "Zuótiān shì xīngqī sì.", "am": "ትናንት ሐሙስ ነበር።", "en": "Yesterday was Thursday."}]}, {"no": 149, "py": "zuò", "am": "መስራት/ማድረግ", "en": "to do", "rd": "ዙኦ", "emo": "🛠️", "note": "zuò ሁለት ትርጉም አለው፦ 'መስራት/ማድረግ' እና 'መቀመጥ'። ትርጉሙን የሚወስነው ዓረፍተ ነገሩ ነው።", "ex": [{"py": "Wǒ zuò zuòyè.", "am": "የቤት ስራ እሰራለሁ።", "en": "I do homework."}, {"py": "Nǐ zuò shénme?", "am": "ምን እየሰራህ ነው?", "en": "What are you doing?"}]}, {"no": 150, "py": "zuò", "am": "መቀመጥ", "en": "to sit", "rd": "ዙኦ", "emo": "💺", "note": "zuò 'መቀመጥ' ሲሆን ዓረፍተ ነገሩ ቦታን ይጠቁማል (ለምሳሌ zuò zài yǐzi shàng)።", "ex": [{"py": "Qǐng zuò zài zhè li.", "am": "እባክህ እዚህ ተቀመጥ።", "en": "Please sit here."}, {"py": "Wǒ zuò zài yǐzi shàng.", "am": "ወንበር ላይ ተቀምጫለሁ።", "en": "I'm sitting on the chair."}]}], "dialogues": [{"title": "ቻው!", "lines": [{"who": "A", "py": "Zàijiàn!", "am": "ቻው!", "en": "Goodbye!"}, {"who": "B", "py": "Zàijiàn! Míngtiān jiàn!", "am": "ቻው! ነገ እንገናኝ!", "en": "Goodbye! See you tomorrow!"}]}, {"title": "የት ትኖራለህ?", "lines": [{"who": "A", "py": "Nǐ zhù zài nǎr?", "am": "የት ትኖራለህ?", "en": "Where do you live?"}, {"who": "B", "py": "Wǒ zhù zài Běijīng.", "am": "ቤጂንግ እኖራለሁ።", "en": "I live in Beijing."}]}]}];
+  var WORDS = [];
+  DATA.forEach(function(c){ c.words.forEach(function(w){ w.ch = c.n; WORDS.push(w); }); });
+
+  // ---- per-viewer storage (optional; every access guarded) ----
+  function load(key, fallback){ try { var v = JSON.parse(localStorage.getItem(key)); return v == null ? fallback : v; } catch(e){ return fallback; } }
+  function save(key, val){ try { localStorage.setItem(key, JSON.stringify(val)); } catch(e){} }
+  var learned = load('hsk1-learned', {});
+  var edits = load('hsk1-edits', {});
+  WORDS.forEach(function(w){
+    var e = edits[w.no]; if (!e) return;
+    ['py','am','en','rd','emo','note'].forEach(function(k){ if (typeof e[k] === 'string') w[k] = e[k]; });
+    w.edited = true;
+  });
+  function isLearned(w){ return !!learned[w.no]; }
+  function setLearned(w, v){ if (v) learned[w.no] = true; else delete learned[w.no]; save('hsk1-learned', learned); updateProgress(); }
+  function updateProgress(){
+    var k = Object.keys(learned).length;
+    document.getElementById('learned-text').textContent = k + ' / ' + WORDS.length;
+    document.getElementById('learned-bar').style.width = (k / WORDS.length * 100).toFixed(1) + '%';
+  }
+
+  // ---- speech (device voice) ----
+  var canSpeak = ('speechSynthesis' in window) && typeof SpeechSynthesisUtterance !== 'undefined';
+  function speak(text){
+    if (!canSpeak) return toast('ድምፅ በዚህ መሣሪያ አይደገፍም');
+    try {
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN'; u.rate = 0.8;
+      var vs = window.speechSynthesis.getVoices() || [];
+      for (var i = 0; i < vs.length; i++){ if (/^zh/i.test(vs[i].lang)) { u.voice = vs[i]; break; } }
+      window.speechSynthesis.speak(u);
+    } catch(e){}
+  }
+
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function inChapter(w, ch){ return ch === 0 || w.ch === ch; }
+  function toast(msg){
+    var t = document.getElementById('toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast._t); toast._t = setTimeout(function(){ t.hidden = true; }, 1800);
+  }
+  function chipRow(el, state, onPick){
+    el.innerHTML = '';
+    DATA.length && ['ሁሉም'].concat(DATA.map(function(c){ return 'ም ' + c.n; })).forEach(function(lab, idx){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.textContent = lab;
+      b.setAttribute('aria-pressed', String(state.ch === idx));
+      b.addEventListener('click', function(){ onPick(idx); });
+      el.appendChild(b);
+    });
+  }
+
+  // ---- tabs ----
+  function showTab(name){
+    ['words','cards','quiz','dialogue'].forEach(function(t){ document.getElementById('view-' + t).hidden = (t !== name); });
+    document.querySelectorAll('.tab').forEach(function(b){ b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === name)); });
+    if (name === 'words') renderWords();
+    if (name === 'cards') renderCard();
+    if (name === 'quiz') renderQuizStart();
+    if (name === 'dialogue') renderDialogue();
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+  document.querySelectorAll('.tab').forEach(function(b){ b.addEventListener('click', function(){ showTab(b.getAttribute('data-tab')); }); });
+
+  // ---- own voice clips (per viewer, IndexedDB; every access guarded) ----
+  var hasOwnAudio = {}, urlCache = {};
+  var AUDIO_ACCEPT = 'audio/*,.m4a,.mp3,.wav,.ogg,.aac,.amr,.3gp,.opus,.flac';
+  function openDb(){
+    return new Promise(function(res, rej){
+      try {
+        var r = indexedDB.open('hsk1-audio', 1);
+        r.onupgradeneeded = function(){ r.result.createObjectStore('clips'); };
+        r.onsuccess = function(){ res(r.result); };
+        r.onerror = function(){ rej(r.error); };
+      } catch(e){ rej(e); }
+    });
+  }
+  function clipOp(mode, fn){
+    return openDb().then(function(db){
+      return new Promise(function(res, rej){
+        var tx = db.transaction('clips', mode), req = fn(tx.objectStore('clips'));
+        tx.oncomplete = function(){ res(req ? req.result : undefined); };
+        tx.onerror = tx.onabort = function(){ rej(tx.error); };
+      });
+    });
+  }
+  function forgetUrl(no){ if (urlCache[no]) { try { URL.revokeObjectURL(urlCache[no]); } catch(e){} delete urlCache[no]; } }
+  function refreshClips(){
+    return clipOp('readonly', function(s){ return s.getAllKeys(); }).then(function(keys){
+      hasOwnAudio = {}; (keys || []).forEach(function(k){ hasOwnAudio[k] = true; }); renderWords();
+    }).catch(function(){});
+  }
+  function playWord(w){
+    if (!hasOwnAudio[w.no]) return speak(w.py);
+    clipOp('readonly', function(s){ return s.get(w.no); }).then(function(blob){
+      if (!blob) return speak(w.py);
+      if (!urlCache[w.no]) urlCache[w.no] = URL.createObjectURL(blob);
+      var a = new Audio(urlCache[w.no]);
+      a.play().catch(function(){ speak(w.py); });
+    }).catch(function(){ speak(w.py); });
+  }
+  document.getElementById('list').addEventListener('change', function(e){
+    if (!e.target.matches('input[data-audio]')) return;
+    var no = Number(e.target.getAttribute('data-audio'));
+    var file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    var isAudio = /^audio\//.test(file.type || '') || /\.(m4a|mp3|wav|ogg|aac|amr|3gp|opus|flac)$/i.test(file.name || '');
+    if (!isAudio) return toast('የድምጽ ፋይል ብቻ ምረጥ');
+    if (file.size > 8 * 1024 * 1024) return toast('ፋይሉ ከ8 MB መብለጥ የለበትም');
+    clipOp('readwrite', function(s){ return s.put(file, no); }).then(function(){
+      forgetUrl(no); hasOwnAudio[no] = true; renderWords(); toast('ድምጽህ ተቀምጧል');
+    }).catch(function(err){ toast('ማስቀመጥ አልተቻለም: ' + ((err && err.name) || 'error')); });
+  });
+
+  // ---- words + edit ----
+  var wState = { ch: 0, q: '' };
+  function renderWords(){
+    chipRow(document.getElementById('chips-words'), wState, function(i){ wState.ch = i; renderWords(); });
+    var q = wState.q.trim().toLowerCase();
+    var rows = WORDS.filter(function(w){
+      if (!inChapter(w, wState.ch)) return false;
+      if (!q) return true;
+      return (w.py + ' ' + w.am + ' ' + w.en + ' ' + w.rd).toLowerCase().indexOf(q) !== -1;
+    });
+    var list = document.getElementById('list');
+    list.innerHTML = rows.length ? '' : '<li class="empty">ምንም ቃል አልተገኘም።</li>';
+    rows.forEach(function(w){
+      var li = document.createElement('li'); li.className = 'item';
+      li.innerHTML =
+        '<div class="emo" aria-hidden="true">' + esc(w.emo) + '</div>' +
+        '<div style="min-width:0">' +
+          '<div class="head"><div class="py">' + esc(w.py) + '</div><span class="muted tnum" style="font-size:.8rem">#' + w.no + '</span></div>' +
+          '<div class="am">' + esc(w.am) + '</div>' +
+          '<div class="en">' + esc(w.en) + '</div>' +
+          '<span class="rd">አነባበብ: ' + esc(w.rd) + '</span>' +
+          '<div class="note">' + esc(w.note) + '</div>' +
+          '<div class="row-actions">' +
+            '<button class="btn" type="button" data-play="' + w.no + '">▶ ስማ</button>' +
+            '<label class="btn file-btn ' + (hasOwnAudio[w.no] ? 'on' : '') + '">🎙 የኔ ድምጽ<input type="file" class="file-in" data-audio="' + w.no + '" accept="' + AUDIO_ACCEPT + '"></label>' +
+            (hasOwnAudio[w.no] ? '<button class="btn danger" type="button" data-del="' + w.no + '" aria-label="ድምጽ ሰርዝ">🗑</button>' : '') +
+            '<button class="btn ' + (isLearned(w) ? 'on' : '') + '" type="button" data-learn="' + w.no + '">' + (isLearned(w) ? '✓ ተምሬዋለሁ' : 'ተምሬዋለሁ') + '</button>' +
+            '<button class="btn ghost" type="button" data-edit="' + w.no + '">✎ አርም</button>' +
+          '</div>' +
+        '</div>';
+      list.appendChild(li);
+    });
+    updateProgress();
+  }
+  document.getElementById('search').addEventListener('input', function(e){ wState.q = e.target.value; renderWords(); });
+  document.getElementById('list').addEventListener('click', function(e){
+    var p = e.target.closest('[data-play]');
+    if (p) return playWord(WORDS[Number(p.getAttribute('data-play')) - 1]);
+    var up = e.target.closest('[data-up]');
+    if (up){ uploadNo = Number(up.getAttribute('data-up')); return document.getElementById('audio-file').click(); }
+    var dl = e.target.closest('[data-del]');
+    if (dl){
+      var dn = Number(dl.getAttribute('data-del'));
+      return clipOp('readwrite', function(s){ return s.delete(dn); }).then(function(){
+        forgetUrl(dn); hasOwnAudio[dn] = false; renderWords(); toast('ድምጽ ተሰርዟል');
+      }).catch(function(){ toast('መሰረዝ አልተቻለም'); });
+    }
+    var l = e.target.closest('[data-learn]');
+    if (l){ var w = WORDS[Number(l.getAttribute('data-learn')) - 1]; setLearned(w, !isLearned(w)); return renderWords(); }
+    var ed = e.target.closest('[data-edit]');
+    if (ed) openEdit(WORDS[Number(ed.getAttribute('data-edit')) - 1]);
+  });
+
+  var dlg = document.getElementById('edit-dialog');
+  function openEdit(w){
+    document.getElementById('edit-title').textContent = '#' + w.no + ' · ቃሉን አርም';
+    document.getElementById('f-no').value = w.no;
+    document.getElementById('f-py').value = w.py;
+    document.getElementById('f-am').value = w.am;
+    document.getElementById('f-en').value = w.en;
+    document.getElementById('f-rd').value = w.rd;
+    document.getElementById('f-emo').value = w.emo;
+    document.getElementById('f-note').value = w.note;
+    document.getElementById('f-reset').hidden = !edits[w.no];
+    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
+    document.getElementById('f-py').focus();
+  }
+  function closeEdit(){ if (typeof dlg.close === 'function') dlg.close(); else dlg.removeAttribute('open'); }
+  document.getElementById('f-cancel').addEventListener('click', closeEdit);
+  document.getElementById('f-reset').addEventListener('click', function(){
+    var no = Number(document.getElementById('f-no').value);
+    delete edits[no]; save('hsk1-edits', edits);
+    applyAll(no); closeEdit(); renderWords(); toast('ወደ መጀመሪያው ተመልሷል');
+  });
+  document.getElementById('edit-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var no = Number(document.getElementById('f-no').value);
+    var v = {
+      py: document.getElementById('f-py').value.trim(),
+      am: document.getElementById('f-am').value.trim(),
+      en: document.getElementById('f-en').value.trim(),
+      rd: document.getElementById('f-rd').value.trim(),
+      emo: document.getElementById('f-emo').value.trim() || '•',
+      note: document.getElementById('f-note').value.trim()
+    };
+    if (!v.py || !v.am || !v.en || !v.rd) return toast('ፒኒን፣ አማርኛ፣ እንግሊዝኛ እና አነባበብ ባዶ መሆን የለባቸውም');
+    edits[no] = v; save('hsk1-edits', edits);
+    applyAll(no); closeEdit(); renderWords(); toast('ተቀምጧል');
+  });
+  function applyAll(no){
+    var w = WORDS[no - 1], orig = ORIG[no - 1];
+    ['py','am','en','rd','emo','note'].forEach(function(k){ w[k] = orig[k]; });
+    var e = edits[no];
+    if (e) ['py','am','en','rd','emo','note'].forEach(function(k){ if (typeof e[k] === 'string') w[k] = e[k]; });
+    w.edited = !!e;
+  }
+  var ORIG = WORDS.map(function(w){ return { py: w.py, am: w.am, en: w.en, rd: w.rd, emo: w.emo, note: w.note }; });
+  dlg.addEventListener('click', function(e){ if (e.target === dlg) closeEdit(); });
+
+  // ---- flashcards ----
+  var cState = { ch: 0, deck: [], i: 0, known: 0, unknown: 0 };
+  function buildDeck(){ cState.deck = WORDS.filter(function(w){ return inChapter(w, cState.ch); }); cState.i = 0; cState.known = 0; cState.unknown = 0; }
+  function renderCard(){
+    chipRow(document.getElementById('chips-cards'), cState, function(i){ cState.ch = i; buildDeck(); renderCard(); });
+    var flash = document.getElementById('flash'), inner = document.getElementById('flash-inner');
+    var countEl = document.getElementById('card-count');
+    if (!cState.deck.length) buildDeck();
+    if (cState.i >= cState.deck.length){
+      inner.innerHTML = '<div class="face"><div class="am-big">ጨርሰሃል! 🎉</div>' +
+        '<div class="en-big">አውቃለሁ: ' + cState.known + ' · አላውቅም: ' + cState.unknown + '</div>' +
+        '<button class="btn primary" type="button" id="again">እንደገና</button></div>';
+      flash.classList.remove('flipped'); countEl.textContent = 'ተጠናቋል';
+      document.getElementById('again').addEventListener('click', function(){ buildDeck(); renderCard(); });
+      return;
+    }
+    var w = cState.deck[cState.i];
+    countEl.textContent = (cState.i + 1) + ' / ' + cState.deck.length;
+    inner.innerHTML =
+      '<div class="face"><div style="font-size:2.6rem" aria-hidden="true">' + esc(w.emo) + '</div>' +
+      '<div class="big">' + esc(w.py) + '</div><div class="muted">ገልብጥ ለትርጉም</div></div>' +
+      '<div class="face back"><div class="am-big">' + esc(w.am) + '</div>' +
+      '<div class="en-big">' + esc(w.en) + '</div>' +
+      '<div class="rd-big">አነባበብ: ' + esc(w.rd) + '</div>' +
+      '<div class="note-small">' + esc(w.note) + '</div>' +
+      '<div class="ex-small"><span class="py">' + esc(w.ex[0].py) + '</span><br>' + esc(w.ex[0].am) + '<br><span class="muted">' + esc(w.ex[0].en) + '</span></div></div>';
+    flash.classList.remove('flipped');
+  }
+  document.getElementById('flash').addEventListener('click', function(){
+    if (cState.i < cState.deck.length) this.classList.toggle('flipped');
+  });
+  function next(known){
+    if (cState.i >= cState.deck.length) return;
+    var w = cState.deck[cState.i];
+    if (known){ cState.known++; setLearned(w, true); } else { cState.unknown++; }
+    cState.i++; renderCard();
+  }
+  document.getElementById('btn-yes').addEventListener('click', function(){ next(true); });
+  document.getElementById('btn-no').addEventListener('click', function(){ next(false); });
+  document.getElementById('btn-listen').addEventListener('click', function(){
+    if (cState.i < cState.deck.length) playWord(cState.deck[cState.i]);
+  });
+
+  // ---- quiz ----
+  var qState = { ch: 0, items: [], i: 0, score: 0, done: false };
+  function shuffle(a){ a = a.slice(); for (var i = a.length - 1; i > 0; i--){ var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  function startQuiz(){
+    var pool = WORDS.filter(function(w){ return inChapter(w, qState.ch); });
+    qState.items = shuffle(pool).slice(0, Math.min(10, pool.length)).map(function(w){
+      var d = shuffle(WORDS.filter(function(x){ return x.py !== w.py; })).slice(0, 3).map(function(x){ return x.py; });
+      return { w: w, opts: shuffle([w.py].concat(d)) };
+    });
+    qState.i = 0; qState.score = 0; qState.done = false;
+    renderQuiz();
+  }
+  function renderQuizStart(){
+    chipRow(document.getElementById('chips-quiz'), qState, function(i){ qState.ch = i; startQuiz(); });
+    if (!qState.items.length) startQuiz(); else renderQuiz();
+  }
+  function renderQuiz(){
+    var body = document.getElementById('quiz-body');
+    if (!qState.items.length){ body.innerHTML = '<p class="empty">ጥያቄ የለም።</p>'; return; }
+    if (qState.done){
+      body.innerHTML = '<div class="qcard score"><div class="prompt">ውጤትህ ' + qState.score + ' / ' + qState.items.length + '</div>' +
+        '<div class="muted">' + (qState.score === qState.items.length ? 'በጣም ጥሩ! ሁሉንም አግኝተሃል።' : 'ቀጥል፤ ድጋሚ ሞክር።') + '</div>' +
+        '<button class="btn primary" type="button" id="quiz-again">አዲስ ጥያቄ</button></div>';
+      document.getElementById('quiz-again').addEventListener('click', startQuiz);
+      return;
+    }
+    var it = qState.items[qState.i];
+    body.innerHTML =
+      '<div class="qcard"><div class="counter">ጥያቄ ' + (qState.i + 1) + ' / ' + qState.items.length + '</div>' +
+      '<div class="prompt">' + esc(it.w.am) + '</div><div class="muted">' + esc(it.w.en) + '</div>' +
+      '<div class="opts" id="opts">' + it.opts.map(function(o, k){ return '<button class="opt" type="button" data-k="' + k + '">' + esc(o) + '</button>'; }).join('') + '</div>' +
+      '<div class="feedback" id="fb" aria-live="polite"></div>' +
+      '<div><button class="btn primary" type="button" id="quiz-next" disabled>ቀጣይ</button></div></div>';
+    document.getElementById('opts').addEventListener('click', function(e){
+      var b = e.target.closest('.opt'); if (!b || b.disabled) return;
+      var chosen = it.opts[Number(b.getAttribute('data-k'))];
+      document.querySelectorAll('#opts .opt').forEach(function(x){ x.disabled = true; if (x.textContent === it.w.py) x.classList.add('right'); });
+      var fb = document.getElementById('fb');
+      if (chosen === it.w.py){ qState.score++; b.classList.add('right'); fb.textContent = 'ትክክል ነው!'; fb.className = 'feedback ok'; }
+      else { b.classList.add('wrong'); fb.textContent = 'ትክክለኛው: ' + it.w.py; fb.className = 'feedback no'; }
+      speak(it.w.py);
+      document.getElementById('quiz-next').disabled = false;
+    });
+    document.getElementById('quiz-next').addEventListener('click', function(){
+      qState.i++; if (qState.i >= qState.items.length) qState.done = true; renderQuiz();
+    });
+  }
+
+  // ---- dialogues ----
+  var dState = { ch: 0 };
+  function renderDialogue(){
+    chipRow(document.getElementById('chips-dlg'), dState, function(i){ dState.ch = i; renderDialogue(); });
+    var body = document.getElementById('dlg-body'); body.innerHTML = '';
+    DATA.filter(function(c){ return dState.ch === 0 || c.n === dState.ch; }).forEach(function(c){
+      c.dialogues.forEach(function(d){
+        var box = document.createElement('div'); box.className = 'dlg';
+        box.innerHTML = '<h3>' + esc(c.title) + ' · ' + esc(d.title) + '</h3>' + d.lines.map(function(l){
+          return '<div class="line"><div class="who">' + esc(l.who) + '</div>' +
+            '<div style="min-width:0"><span class="py">' + esc(l.py) + '</span><span class="am">' + esc(l.am) + '</span><span class="en">' + esc(l.en) + '</span></div>' +
+            '<button class="btn ghost" type="button" data-speak="' + esc(l.py) + '" aria-label="ስማ">▶</button></div>';
+        }).join('');
+        body.appendChild(box);
+      });
+    });
+    if (!body.children.length) body.innerHTML = '<p class="empty">ውይይት የለም።</p>';
+  }
+  document.getElementById('dlg-body').addEventListener('click', function(e){
+    var s = e.target.closest('[data-speak]'); if (s) speak(s.getAttribute('data-speak'));
+  });
+
+  updateProgress();
+  renderWords();
+  buildDeck();
+  refreshClips();
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function () {});
+  });
+}
+</script>
+</body></html>
